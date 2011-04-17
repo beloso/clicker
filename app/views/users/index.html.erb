@@ -1,0 +1,36 @@
+<h1>Listing users</h1>
+
+<%= 
+select(:user, :name, User.all.collect {|u| [ u.name, u.credits >= 0 ] }, {:prompt => 'Select User'})
+%>
+
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>URL</th>
+    <th>Clicks Given</th>
+    <th>Clicks Received</th>
+    <th>Credits</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.name %></td>
+    <td><a href=<%= user.url %> >Click</a></td>
+    <td><%= user.clicks_given %></td>
+    <td><%= user.clicks_received %></td>
+	<td><%= user.credits %></td>
+    <td><%= link_to 'Show', user %></td>
+    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td><%= link_to 'Destroy', user, :confirm => 'Are you sure you want to delete '+user.name+'?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User', new_user_path %>

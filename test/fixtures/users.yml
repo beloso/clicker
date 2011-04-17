@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  url: MyString
+  clicks_given: 1
+  clicks_received: 1
+  role: 1
+
+two:
+  name: MyString
+  url: MyString
+  clicks_given: 1
+  clicks_received: 1
+  role: 1

@@ -1,3 +1,5 @@
+<h1>Viewing <%= @user.name %></h1>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -6,17 +8,17 @@
 </p>
 
 <p>
-  <b>Url:</b>
-  <%= @user.url %>
+  <b>URL:</b>
+  <a href=<%= @user.url %>> <%= @user.url %> </a>
 </p>
 
 <p>
-  <b>Clicks given:</b>
+  <b>Clicks Given:</b>
   <%= @user.clicks_given %>
 </p>
 
 <p>
-  <b>Clicks received:</b>
+  <b>Clicks Received:</b>
   <%= @user.clicks_received %>
 </p>
 

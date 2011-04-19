@@ -11,9 +11,12 @@ class User < ActiveRecord::Base
   end
   
   validates :name,        :presence   => true
+  validates_uniqueness_of   :name
   
   validates :url,         :presence   => true
   validates_format_of     :url, :with => /\A(http\:\/\/)?(gold|www)?(\.)?darkthrone\.com\/recruiter\/outside\/[A-Z0-9]+\Z/
+  validates_uniqueness_of   :url
+  
   
   validates_numericality_of :clicks_given,    :only_integer => true, :greater_than_or_equal_to => 0
   validates_numericality_of :clicks_received, :only_integer => true, :greater_than_or_equal_to => 0

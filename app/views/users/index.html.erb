@@ -1,9 +1,7 @@
 <h1>Listing Users</h1>
 
-<%= 
-select(:user, :name, User.all.collect {|u| [ u.name, u.credits >= 0 ] }, {:prompt => 'Select User'})
-%>
-
+<%= select(:user, :name, User.all.collect {|u| [ u.name, u.credits >= 0 ] }, {:prompt => 'Select User'}); %>
+<%= button_to "Start Clicking", :method => "click" %>
 
 <table>
   <tr>
@@ -25,8 +23,10 @@ select(:user, :name, User.all.collect {|u| [ u.name, u.credits >= 0 ] }, {:promp
     <td><%= user.clicks_received %></td>
 	<td><%= user.credits %></td>
     <td><%= link_to 'Show', user %></td>
+<% if false %>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure you want to delete '+user.name+'?', :method => :delete %></td>
+<% end %>
   </tr>
 <% end %>
 </table>

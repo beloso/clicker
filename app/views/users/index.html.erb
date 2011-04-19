@@ -18,7 +18,7 @@
 <% @users.each do |user| %>
   <tr>
     <td><%= user.name %></td>
-    <td><a href=<%= user.url %> >Click</a></td>
+    <td><a href=<%= user.url %> target=_blank>Click</a></td>
     <td><%= user.clicks_given %></td>
     <td><%= user.clicks_received %></td>
 	<td><%= user.credits %></td>

@@ -1,8 +1,8 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.string :name
-      t.string :url
+      t.string :name, :unique => true, :null => false
+      t.string :url, :unique => true, :null => false
       t.integer :clicks_given
       t.integer :clicks_received
       #t.boolean :admin

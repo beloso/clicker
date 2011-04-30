@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(:version => 20110417130038) do
 
   create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "url"
+    t.string   "name",            :null => false
+    t.string   "url",             :null => false
     t.integer  "clicks_given"
     t.integer  "clicks_received"
     t.datetime "created_at"

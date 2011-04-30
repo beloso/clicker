@@ -22,5 +22,14 @@ module UsersHelper
     button_to "Start Clicking",
               @users.first ? click_url(:id => @users.first.id) : {},
               :disabled => !@users.first;
-   end
+  end
+  
+  def render_view
+    session[:current_user] ||= User.find(params[:user][:id]);
+    
+    respond_to do |format|
+      format.html # click.html.erb
+      format.xml  { render :xml => @user }
+    end 
+  end
 end

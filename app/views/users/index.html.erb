@@ -1,5 +1,12 @@
 <h1>Listing Users</h1>
 
+<% if flash[:notice] %>
+	<p class="notice"><%= flash[:notice] %></p>
+<% end %>
+<% if flash[:error] %>
+	<p class="error"><%= flash[:error] %></p>
+<% end %>
+
 <% if true %>
 <%= form_tag(click_url(:id => @users.first.id) ,:method=>'post') do %>
  <%= current_user_selector %>

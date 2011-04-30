@@ -85,8 +85,13 @@ class UsersController < ApplicationController
     @title = "Clicking " + @user.name
     
     @users_to_click = User.where("clicks_given - clicks_received >= ?", -5).order("clicks_given - clicks_received DESC")
-    session[:current_user] ||= User.find(params[:user][:id]);
-    
+    if session[:current_user] || params[:user][:id] && !params[:user][:id].blank?
+      session[:current_user] ||= User.find(params[:user][:id])
+    else
+      flash[:error] = "You must select a user."
+      redirect_to :action => 'index'
+      return
+    end
     respond_to do |format|
       format.html # click.html.erb
       format.xml  { render :xml => @user }

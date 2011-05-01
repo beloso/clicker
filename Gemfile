@@ -30,5 +30,5 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # and rake tasks are available in development mode:
 group :development, :test do
   # gem 'webrat'
-  gem 'RedCloth', '>= 4.1.1'
+  # gem 'RedCloth', '>= 4.1.1'
 end

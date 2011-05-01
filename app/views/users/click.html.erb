@@ -1,6 +1,6 @@
 <h1>Clicking <%= @user.name %></h1>
 
-<p id="notice"><%= notice %></p>
+<%= render :partial => "flash", :locals => { :flash => flash } %>
 
 <%= next_user_button %>
 <%= end_clicking_button %>

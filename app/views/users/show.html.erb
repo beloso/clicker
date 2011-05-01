@@ -1,6 +1,6 @@
 <h1>Viewing <%= @user.name %></h1>
 
-<p id="notice"><%= notice %></p>
+<%= render :partial => "flash", :locals => { :flash => flash } %>
 
 <p>
   <b>Name:</b>
@@ -26,7 +26,5 @@
   <b>Credits:</b>
   <%= @user.credits %>
 </p>
-<% if false %>
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<% end %>
 <%= link_to 'Back', users_path %>

@@ -1,4 +1,7 @@
-class UsersController < ApplicationController  
+class UsersController < ApplicationController
+
+  before_filter :authenticate, :except => [:index, :show, :new, :click, :create]
+  
   # GET /users
   # GET /users.xml
   def index
@@ -77,8 +80,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # /users/:id/click
-  # /users/:id/click.xml
+  # /users/1/click
+  # /users/1/click.xml
   def click
     @user = User.find(params[:id])
     
@@ -88,7 +91,7 @@ class UsersController < ApplicationController
     if session[:current_user] || params[:user][:id] && !params[:user][:id].blank?
       session[:current_user] ||= User.find(params[:user][:id])
     else
-      flash[:error] = "You must select a user."
+      flash[:alert] = "You must select a user."
       redirect_to :action => 'index'
       return
     end

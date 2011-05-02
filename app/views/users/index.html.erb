@@ -2,7 +2,7 @@
 
 <%= render :partial => "flash", :locals => { :flash => flash } %>
 
-<%= form_tag(@users.first ? click_url(:id => @users.first.id) : {} ,:method => :get) do %>
+<%= form_tag(@users.first ? click_url(:id => @users.first.id) : {} ,:method => :post) do %>
  <%= collection_select(:user, :id, @users, :id, :name, {:prompt => "Select a User"}, :disabled => !@users.first) %>
  <%= submit_tag 'Start Clicking', :disabled => !@users.first %>
 <% end %>

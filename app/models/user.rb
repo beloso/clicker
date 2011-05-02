@@ -1,12 +1,33 @@
 class User < ActiveRecord::Base
+  MINIMUM_CREDITS = -5
+  
   before_validation :default_values
+  
   def default_values
     self.clicks_given    = 25 unless self.clicks_given
     self.clicks_received = 0  unless self.clicks_received
   end
   
   def credits
-    credits = self.clicks_given - self.clicks_received
+    self.clicks_given - self.clicks_received
+  end
+  
+  def self.clickable_users
+    where("clicks_given - clicks_received >= ?", MINIMUM_CREDITS).ordered_by_credits
+  end
+  
+  def self.ordered_by_credits
+    order("(clicks_given - clicks_received) DESC")
+  end
+  
+  def gain_credit
+    self.clicks_given += 1
+    self.save!
+  end
+  
+  def lose_credit
+    self.clicks_received += 1
+    self.save!
   end
   
   validates                 :name, :presence => true

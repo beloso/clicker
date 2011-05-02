@@ -1,15 +1,18 @@
 class UsersController < ApplicationController
-
+  
   before_filter :authenticate, :except => [:index, :show, :new, :click, :create]
   
   # GET /users
   # GET /users.xml
   def index
-    @users = User.order("(clicks_given - clicks_received) DESC")
-    session[:current_user] = nil
+    @users = User.ordered_by_credits
     
-    @title = "Listing Users"
-                       
+    process_clicks
+    
+    session[:current_user_id] = nil
+    
+    @title = "Listing Users"             
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }
@@ -80,22 +83,24 @@ class UsersController < ApplicationController
     end
   end
 
-  # /users/1/click
-  # /users/1/click.xml
+  # POST /users/1/click
+  # POST /users/1/click.xml
   def click
     @user = User.find(params[:id])
     @title = "Clicking " + @user.name
     
-    @users_to_click = User.where("clicks_given - clicks_received >= ?", -5).order("clicks_given - clicks_received DESC")
+    @users_to_click = User.clickable_users
     @next_user = @users_to_click[@users_to_click.index(@user) + 1]
-    
-    if session[:current_user] || params[:user][:id] && !params[:user][:id].blank?
-      session[:current_user] ||= User.find(params[:user][:id])
+
+    if session[:current_user_id] || !params[:user][:id].blank?
+      session[:current_user_id] ||= params[:user][:id]
     else
       flash[:alert] = "You must select a user."
       redirect_to :action => 'index'
       return
     end
+        
+    process_clicks
     
     respond_to do |format|
       format.html # click.html.erb
@@ -112,6 +117,37 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(users_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  def process_clicks
+    unless session[:current_user_id].blank?
+      @selected_user ||= User.find(session[:current_user_id])
+    end
+
+    unless params[:clicked_user_id].blank?
+      clicked_user = User.find(params[:clicked_user_id])
+    end
+    
+    case params[:commit]
+    when "Next User"
+      unless session[:current_user_id] == params[:clicked_user_id]
+        User.transaction do
+          clicked_user.lose_credit
+          @selected_user.gain_credit
+        end
+      end
+      flash[:notice] = "Successfully clicked " + clicked_user.name + "."
+    when "End Clicking"
+      unless session[:current_user_id] == params[:clicked_user_id]
+        User.transaction do
+          clicked_user.lose_credit
+          @selected_user.gain_credit
+        end
+      end
+      flash[:notice] = "Successfully clicked " + clicked_user.name + "."
+    when "Skip User"
+      flash[:notice] = "Skipped " + clicked_user.name + "."
     end
   end
 end

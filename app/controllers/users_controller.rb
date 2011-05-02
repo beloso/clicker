@@ -84,10 +84,11 @@ class UsersController < ApplicationController
   # /users/1/click.xml
   def click
     @user = User.find(params[:id])
-    
     @title = "Clicking " + @user.name
     
     @users_to_click = User.where("clicks_given - clicks_received >= ?", -5).order("clicks_given - clicks_received DESC")
+    @next_user = @users_to_click[@users_to_click.index(@user) + 1]
+    
     if session[:current_user] || params[:user][:id] && !params[:user][:id].blank?
       session[:current_user] ||= User.find(params[:user][:id])
     else
@@ -95,6 +96,7 @@ class UsersController < ApplicationController
       redirect_to :action => 'index'
       return
     end
+    
     respond_to do |format|
       format.html # click.html.erb
       format.xml  { render :xml => @user }

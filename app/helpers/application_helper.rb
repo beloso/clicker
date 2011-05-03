@@ -7,7 +7,7 @@ module ApplicationHelper
     if @title.blank?
       @title = base_title
     else 
-      '#{base_title} | #{@title}'
+      "#{base_title} | #{@title}"
     end
   end
 end

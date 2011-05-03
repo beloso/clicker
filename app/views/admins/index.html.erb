@@ -5,7 +5,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Email</th>
+    <th>Last Log In</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,11 +14,11 @@
 <% @admins.each do |admin| %>
   <tr>
     <td><%= admin.name %></td>
-	<td><%= admin.email_head %></td>
+    <td><%= admin.last_sign_in_at %></td>
     <td><%= link_to 'Show', admin %></td>
     <% if admin_signed_in? %>
       <td><%= link_to 'Edit', edit_admin_path(admin) %></td>
- 	  <td><%= link_to 'Destroy', admin, :confirm => 'Are you sure you want to delete '+admin.name+'?', :method => :delete %></td>
+ 	  <td><%= link_to 'Delete', admin, :confirm => 'Are you sure you want to delete '+admin.name+'?', :method => :delete %></td>
  	<% end %>
   </tr>
 <% end %>

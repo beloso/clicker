@@ -1,5 +1,8 @@
 Clicker::Application.routes.draw do
+  devise_for :admins
+
   resources :users
+  resources :admins
 
   get "home/index"
 
@@ -9,9 +12,6 @@ Clicker::Application.routes.draw do
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
-  match 'login', :controller => "application", :action => "authenticate"
-  match 'logout', :controller => "application", :action => "destroy"
-
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase

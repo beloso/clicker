@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   
-  before_filter :authenticate, :except => [:index, :show, :new, :click, :create]
+  before_filter :authenticate_admin!, :except => [:index, :show, :new, :click, :create]
   
   # GET /users
   # GET /users.xml

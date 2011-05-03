@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 # Use stable rails
 gem 'rails', '>= 3.0.6'
+gem 'devise'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

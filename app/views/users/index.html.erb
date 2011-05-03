@@ -1,6 +1,6 @@
 <h1>Listing Users</h1>
 
-<%= render :partial => "flash", :locals => { :flash => flash } %>
+<%= render :partial => "shared/flash", :locals => { :flash => flash } %>
 
 <%= form_tag(@users.first ? click_url(:id => @users.first.id) : {} ,:method => :post) do %>
  <%= collection_select(:user, :id, @users, :id, :name, {:prompt => "Select a User"}, :disabled => !@users.first) %>
@@ -35,7 +35,7 @@
 	<% end %>
 	<td><%= user.credits %></td>
     <td><%= link_to 'Show', user %></td>
-    <% if logged_in? %>
+    <% if admin_signed_in? %>
       <td><%= link_to 'Edit', edit_user_path(user) %></td>
  	  <td><%= link_to 'Destroy', user, :confirm => 'Are you sure you want to delete '+user.name+'?', :method => :delete %></td>
  	<% end %>

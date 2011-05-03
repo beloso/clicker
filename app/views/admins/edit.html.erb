@@ -1,0 +1,9 @@
+<h1>Editing <%= @admin.name %></h1>
+
+<%= render :partial => "shared/flash", :locals => { :flash => flash } %>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @admin %> |
+<%= link_to 'Back to click list', users_path %> |
+<%= link_to 'Back to admin list', admins_path %>

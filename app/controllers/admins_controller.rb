@@ -28,7 +28,6 @@ class AdminsController < ApplicationController
   # GET /admins/new.xml
   def new
     @admin = Admin.new
-    @title = "Creating Admin"
     
     respond_to do |format|
       format.html # new.html.erb
@@ -39,8 +38,6 @@ class AdminsController < ApplicationController
   # GET /admins/1/edit
   def edit
     @admin = Admin.find(params[:id])
-    
-    @title = "Editing " + @admin.name
   end
 
   # POST /admins

@@ -2,6 +2,7 @@
 
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
+<div id="show_clicker">
 <p>
   <b>Name:</b>
   <%= @admin.name %>
@@ -11,6 +12,9 @@
   <b>Email:</b>
   <%= mail_to @admin.email, @admin.email.split('@')[0] %>
 </p>
+</div>
 
+<div id="show_clicker_footer">
 <%= link_to 'Edit', edit_admin_path(@admin) %> |
 <%= link_to 'Back', admins_path %>
+</div>

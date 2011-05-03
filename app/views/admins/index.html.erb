@@ -2,8 +2,8 @@
 
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
-<table>
-  <tr>
+<table id="user_list">
+  <tr class="top">
     <th>Name</th>
     <th>Last Log In</th>
     <th></th>
@@ -12,13 +12,13 @@
   </tr>
 
 <% @admins.each do |admin| %>
-  <tr>
+  <tr class="<%= cycle('oddrow', 'evenrow') %>">
     <td><%= admin.name %></td>
-    <td><%= admin.last_sign_in_at %></td>
-    <td><%= link_to 'Show', admin %></td>
+    <td class="centered"><%= admin.last_sign_in_at %></td>
+    <td class="centered"><%= link_to 'Show', admin %></td>
     <% if admin_signed_in? %>
-      <td><%= link_to 'Edit', edit_admin_path(admin) %></td>
- 	  <td><%= link_to 'Delete', admin, :confirm => 'Are you sure you want to delete '+admin.name+'?', :method => :delete %></td>
+      <td class="centered"><%= link_to 'Edit', edit_admin_path(admin) %></td>
+ 	  <td class="centered"><%= link_to 'Delete', admin, :confirm => 'Are you sure you want to delete '+admin.name+'?', :method => :delete %></td>
  	<% end %>
   </tr>
 <% end %>
@@ -26,4 +26,6 @@
 
 <br />
 
-<%= button_to 'New Admin', new_admin_path, :method => :get %>
+<div id="new_user_button">
+<%= link_to 'New Admin', new_admin_path %>
+</div>

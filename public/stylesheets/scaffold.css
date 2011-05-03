@@ -69,7 +69,7 @@ div.field, div.actions {
 	#user_list, #start_form, #new_user_button, 
 	#clicker_form, #new_clicker_footer, 
 	#show_clicker, #show_clicker_footer, 
-	#edit_user_footer
+	#edit_user_footer, #devise_links, #devise_forms
 	{
 		width: 75%;
 		margin-left: auto;

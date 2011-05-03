@@ -2,6 +2,8 @@
 
 <%= render :partial => "shared/flash", :locals => { :flash => flash } %>
 
+<br />
+
 <div id="show_clicker">
 <p>
   <b>Name:</b>
@@ -28,6 +30,8 @@
   <%= @user.credits %>
 </p>
 </div>
+
+<br />
 
 <div id="show_clicker_footer">
 	<%= link_to 'Edit', edit_user_path(@user) %> |

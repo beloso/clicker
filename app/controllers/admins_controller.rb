@@ -60,7 +60,7 @@ class AdminsController < ApplicationController
   # PUT /admins/1.xml
   def update
     @admin = Admin.find(params[:id])
-
+  
     respond_to do |format|
       if @admin.update_attributes(params[:admin])
         # Line below required if using Devise >= 1.2.0
@@ -73,6 +73,16 @@ class AdminsController < ApplicationController
       end
     end
   end
+  # def update
+  #   @admin = Admin.find(params[:id])
+  #   @admin.password = params[:admin][:password]
+  #   if @admin.save
+  #     redirect_to admins_path, :notice => "User updated!"
+  #   else
+  #     render :action => 'edit'
+  #   end
+  # end
+  
   
   # DELETE /admins/1
   # DELETE /admins/1.xml

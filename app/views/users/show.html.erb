@@ -1,4 +1,4 @@
-<h1>Viewing <%= @user.name %></h1>
+<h1><%= @title = "Viewing " + @user.name %></h1>
 
 <%= render :partial => "shared/flash", :locals => { :flash => flash } %>
 

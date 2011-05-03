@@ -15,13 +15,13 @@
 <%= debug params %>
 
 <% if admin_signed_in? %>
-<%= link_to "Sign Out", destroy_admin_session_path %> |
-<%= link_to "Settings", edit_admin_path(current_admin) %> |
-<%= link_to "Admin List", admins_path %> |
+<%= link_to 'Sign Out', destroy_admin_session_path %> |
+<%= link_to 'Settings', edit_admin_path(current_admin) %> |
+<%= link_to 'Admin List', admins_path %> |
 <% else %>
-<%= link_to "Sign In", new_admin_session_path %>
+<%= link_to 'Sign In', new_admin_session_path %>
 <% end %>
-<%= link_to "Clickers List", users_path %>
+<%= link_to 'Clickers List', users_path %>
 
 <%= yield %>
 

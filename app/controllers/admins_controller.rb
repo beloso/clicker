@@ -47,7 +47,7 @@ class AdminsController < ApplicationController
 
     respond_to do |format|
       if @admin.save
-        format.html { redirect_to(@admin, :notice => 'User was successfully created.') }
+        format.html { redirect_to(@admin, :notice => @admin.name + ' was successfully created.') }
         format.xml  { render :xml => @admin, :status => :created, :location => @admin }
       else
         format.html { render :action => "new" }
@@ -65,7 +65,7 @@ class AdminsController < ApplicationController
       if @admin.update_attributes(params[:admin])
         # Line below required if using Devise >= 1.2.0
         sign_in(@admin, :bypass => true) if @admin == current_admin
-        format.html { redirect_to(@admin, :notice => 'Admin was successfully updated.') }
+        format.html { redirect_to(@admin, :notice => @admin.name + ' was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -81,7 +81,7 @@ class AdminsController < ApplicationController
     @admin.destroy
   
     respond_to do |format|
-      format.html { redirect_to(admins_url, :notice => 'Admin was successfully deleted.') }
+      format.html { redirect_to(admins_url, :notice => @admin.name + ' was successfully deleted.') }
       format.xml  { head :ok }
     end
   end

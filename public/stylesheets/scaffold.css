@@ -1,56 +1,195 @@
-body { background-color: #fff; color: #333; }
+html, body {
+	height:100%;
+}
+
+body { 
+	background-color: darkolivegreen;
+	color: darkgreen;
+}
 
 body, p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size:   13px;
-  line-height: 18px;
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size:   13px;
+	line-height: 18px;
+}
+
+h1 {
+	text-align: center;
 }
 
 pre {
-  background-color: #eee;
-  padding: 10px;
-  font-size: 11px;
+	background-color: #eee;
+	padding: 10px;
+	font-size: 11px;
 }
 
-a { color: #000; }
-a:visited { color: #666; }
-a:hover { color: #fff; background-color:#000; }
+a { 
+	color: darkgreen;
+}
+
+a:visited {
+	 color: darkgreen;
+}
+
+a:hover {
+	color: lightgreen;
+	background-color: darkgreen;
+}
 
 div.field, div.actions {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
+}
+
+#main {
+	width: 75%;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: lightgreen; 
+	border: 1px solid #000;
+}
+
+#main table tr.top {
+	background-color: midnightblue;
+}
+
+#main table tr.top th {
+	color: lightgreen;
+}
+
+#main table tr.evenrow {
+	background-color: lightgreen; 
+}
+
+#main table tr.oddrow {
+	background-color: darkseagreen; 
+}
+
+#main 
+	#user_list, #start_form, #new_user_button, 
+	#clicker_form, #new_clicker_footer, 
+	#show_clicker, #show_clicker_footer, 
+	#edit_user_footer
+	{
+		width: 75%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+#main iframe {
+	width: 100%;
+	height: 100%;
+}
+
+#main #nav_bar_div {
+	width: 100%;
+	color: darkgreen;
+	text-decoration: none;
+	background-color: lightgreen; 
+}
+
+#main #nav_bar {
+	list-style-type: none;
+	text-align: right;
+	margin: 0;
+	padding: 0;
+	padding-right: 10px;
+}
+
+#main #nav_bar li{
+	display: inline;
+}
+
+#main #nav_bar a{
+	color: darkgreen;
+	text-decoration: none;
+}
+
+#main #nav_bar a:visited { 
+	color: darkgreen;
+}
+
+#main #nav_bar a:hover {
+	color: lightgreen;
+	background-color: darkgreen;
+}
+
+#flash {
+	width: 40%;
+	height: 35px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #notice {
-  color: green;
+	color: darkgreen;
+	background-color: lightgreen; 
+	border: 1px solid darkgreen; 
+}
+
+#error {
+	color: darkred;
+	background-color: lightpink;
+	border: 1px solid darkred;
+}
+
+#notice, #error { 
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+}
+
+#notice a, #error a {
+	text-decoration: none;
+}
+#notice a { 
+	border: 1px solid #26722D; 
+	color: darkgreen;
+}
+
+#error a { 
+	border: 1px solid #900; 
+	color: darkred; 
+}
+
+#notice a:hover, #error a:hover {
+	color: #333;
+	border: 1px solid #333;
+}
+
+table td.centered {
+	text-align: center;
 }
 
 .field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table;
+	padding: 2px;
+	background-color: red;
+	display: table;
 }
 
 #error_explanation {
-  width: 450px;
-  border: 2px solid red;
-  padding: 7px;
-  padding-bottom: 0;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
+	width: 450px;
+	border: 2px solid red;
+	padding: 7px;
+	padding-bottom: 0;
+	margin-bottom: 20px;
+	background-color: #f0f0f0;
 }
 
 #error_explanation h2 {
-  text-align: left;
-  font-weight: bold;
-  padding: 5px 5px 5px 15px;
-  font-size: 12px;
-  margin: -7px;
-  margin-bottom: 0px;
-  background-color: #c00;
-  color: #fff;
+	text-align: left;
+	font-weight: bold;
+	padding: 5px 5px 5px 15px;
+	font-size: 12px;
+	margin: -7px;
+	margin-bottom: 0px;
+	background-color: #c00;
+	color: #fff;
 }
 
 #error_explanation ul li {
-  font-size: 12px;
-  list-style: square;
+	font-size: 12px;
+	list-style: square;
 }

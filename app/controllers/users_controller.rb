@@ -101,7 +101,7 @@ class UsersController < ApplicationController
     if session[:current_user_id] || !params[:user][:id].blank?
       session[:current_user_id] ||= params[:user][:id]
     else
-      flash[:alert] = 'You must select a user.'
+      flash[:error] = 'You must select a user.'
       redirect_to :action => 'index'
       return
     end
@@ -131,7 +131,7 @@ class UsersController < ApplicationController
           @selected_user.gain_credit
         end
       end
-      flash[:notice] = 'Successfully clicked ' + clicked_user.name + '.'
+      flash.now[:notice] = 'Successfully clicked ' + clicked_user.name + '.'
     when 'End Clicking'
       unless session[:current_user_id] == params[:clicked_user_id]
         User.transaction do
@@ -141,7 +141,7 @@ class UsersController < ApplicationController
       end
       flash[:notice] = 'Successfully clicked ' + clicked_user.name + '.'
     when 'Skip User'
-      flash[:alert] = 'Skipped ' + clicked_user.name + '.'
+      flash.now[:error] = 'Skipped ' + clicked_user.name + '.'
     end
   end
 end

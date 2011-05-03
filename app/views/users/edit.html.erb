@@ -2,7 +2,13 @@
 
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
+<br />
+
 <%= render 'form' %>
 
+<br />
+
+<div id="edit_user_footer">
 <%= link_to 'Show', @user %> |
 <%= link_to 'Back', users_path %>
+</div>

@@ -1,43 +1,44 @@
-<h1><%= @title = "Listing Users" %></h1>
+<h1><%= @title = "Clicker List" %></h1>
 
-<%= render :partial => "shared/flash", :locals => { :flash => flash } %>
+<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
-<%= form_tag(@users.first ? click_url(:id => @users.first.id) : {} ,:method => :post) do %>
- <%= collection_select(:user, :id, @users, :id, :name, {:prompt => "Select a User"}, :disabled => !@users.first) %>
+<%= form_tag(@users.first ? click_url(:id => @users.first.id) : {} ,:method => :post, :id => 'start_form') do %>
+ <%= collection_select(:user, :id, @users, :id, :name, {:prompt => 'Select a User'}, :disabled => !@users.first) %>
  <%= submit_tag 'Start Clicking', :disabled => !@users.first %>
 <% end %>
 
-<table>
-  <tr>
+<br />
+
+<table id="user_list">
+  <tr class="top">
     <th>Name</th>
     <th>URL</th>
-<% if false %>
+	<th>Credits</th>
     <th>Clicks Given</th>
     <th>Clicks Received</th>
-<% end %>
-    <th>Credits</th>
+    <th></th>
+    <% if admin_signed_in? %>
     <th></th>
     <th></th>
-    <th></th>
+ 	<% end %>
+
   </tr>
 
 <% @users.each do |user| %>
-  <tr>
+  <tr class="<%= cycle('oddrow', 'evenrow') %>">
     <td><%= user.name %></td>
 	<% if true %>
-    <td><%= form_tag(click_url(:id => user.id) ,:method => :get) do %>
+    <td class="centered"><%= form_tag(click_url(:id => user.id) ,:method => :get) do %>
  		<%= submit_tag 'Click' %>
 		<% end %></td>
 	<% end %>
-	<% if false %>
-    <td><%= user.clicks_given %></td>
-    <td><%= user.clicks_received %></td>
-	<% end %>
-	<td><%= user.credits %></td>
+	<td class="centered"><%= user.credits %></td>
+    <td class="centered"><%= user.clicks_given %></td>
+    <td class="centered"><%= user.clicks_received %></td>
     <td><%= link_to 'Show', user %></td>
     <% if admin_signed_in? %>
       <td><%= link_to 'Edit', edit_user_path(user) %></td>
- 	  <td><%= link_to 'Destroy', user, :confirm => 'Are you sure you want to delete '+user.name+'?', :method => :delete %></td>
+ 	  <td><%= link_to 'Delete', user, :confirm => 'Are you sure you want to delete '+user.name+'?', :method => :delete %></td>
  	<% end %>
   </tr>
 <% end %>
@@ -45,4 +46,6 @@
 
 <br />
 
-<%= button_to 'New User', new_user_path, :method => :get %>
+<div id="new_user_button">
+<%= link_to 'New User', new_user_path %>
+</div>

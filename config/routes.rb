@@ -1,10 +1,14 @@
 Clicker::Application.routes.draw do
   devise_for :admins
 
-  resources :users
+  resources :users do 
+    collection do 
+      get 'frozen'
+      delete 'destroy_frozen'
+    end
+  end
+  
   resources :admins
-
-  get "home/index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

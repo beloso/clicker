@@ -5,16 +5,28 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.ordered_by_credits
+    @users = User.clickable_users
 
-    unless @selected_user.nil?
+    unless session[:current_user_id].blank?
       process_clicks
     end
-    session[:current_user_id] = nil             
-    params[:clicked_user_id] = nil
+    
+    session.delete(:current_user_id)
+    @selected_user = nil
     
     respond_to do |format|
       format.html # index.html.erb
+      format.xml  { render :xml => @users }
+    end
+  end
+  
+  # GET /users/inactive
+  # GET /users.xml
+  def frozen
+    @users = User.frozen_users
+    
+    respond_to do |format|
+      format.html # frozen.html.erb
       format.xml  { render :xml => @users }
     end
   end
@@ -85,7 +97,21 @@ class UsersController < ApplicationController
     @user.destroy
   
     respond_to do |format|
-      format.html { redirect_to users_url, :notice => @user.name + ' was successfully deleted.' }
+      format.html { redirect_to :back, :notice => @user.name + ' was successfully deleted.' }
+      format.xml  { head :ok }
+    end
+  end
+  
+  # DELETE /users/
+  # DELETE /users/
+  def destroy_frozen
+    @users = User.frozen_users
+    @users.each do |user|
+      user.destroy
+    end
+  
+    respond_to do |format|
+      format.html { redirect_to :back, :notice => "#{helpers.pluralize(@users.length, 'inactive user was', 'inactive users were')} successfully deleted." }
       format.xml  { head :ok }
     end
   end
@@ -115,9 +141,7 @@ class UsersController < ApplicationController
   end
   
   def process_clicks
-    unless session[:current_user_id].blank?
       @selected_user ||= User.find(session[:current_user_id])
-    end
     
     unless params[:clicked_user_id].blank?
       clicked_user = User.find(params[:clicked_user_id])
@@ -139,7 +163,7 @@ class UsersController < ApplicationController
           @selected_user.gain_credit
         end
       end
-      flash[:notice] = 'Successfully clicked ' + clicked_user.name + '.'
+      flash.now[:notice] = 'Successfully clicked ' + clicked_user.name + '.'
     when 'Skip User'
       flash.now[:error] = 'Skipped ' + clicked_user.name + '.'
     end

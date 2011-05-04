@@ -1,47 +1,32 @@
-<h1><%= @title = "Clicker List" %></h1>
+<h1><%= @title = "Frozen Clicker List" %></h1>
 
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
-
-<br />
-
-<%= form_tag(@users.first ? click_url(:id => @users.first.id) : {} ,:method => :post, :id => 'start_form') do %>
- <%= collection_select(:user, :id, @users, :id, :name, {:prompt => 'Select a User'}, :disabled => !@users.first) %>
- <%= submit_tag 'Start Clicking', :disabled => !@users.first %>
-<% end %>
 
 <br />
 
 <table id="user_list">
   <tr class="top">
     <th>Name</th>
-    <th>URL</th>
 	<th>Credits</th>
     <th>Clicks Given</th>
     <th>Clicks Received</th>
 	<% unless @users.length == 0 %>
     <th></th>
-		<% if admin_signed_in? %>
-		<th></th>
-		<th></th>
-		<% end %>
+    <th></th>
+    <th></th>
 	<% end %>
   </tr>
 
 <% @users.each do |user| %>
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
     <td><%= user.name %></td>
-	<% if true %>
-    <td class="centered"><%= form_tag(click_url(:id => user.id) ,:method => :get) do %>
- 		<%= submit_tag 'Click' %>
-		<% end %></td>
-	<% end %>
 	<td class="centered"><%= user.credits %></td>
     <td class="centered"><%= user.clicks_given %></td>
     <td class="centered"><%= user.clicks_received %></td>
     <td class="centered"><%= link_to 'Show', user %></td>
     <% if admin_signed_in? %>
       <td class="centered"><%= link_to 'Edit', edit_user_path(user) %></td>
- 	  <td class="centered"><%= link_to 'Delete', user, :confirm => 'Are you sure you want to delete '+user.name+'?', :method => :delete %></td>
+ 	  <td class="centered"><%= link_to 'Delete', user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
  	<% end %>
   </tr>
 <% end %>
@@ -50,5 +35,6 @@
 <br />
 
 <div id="new_user_button">
-<%= link_to 'New Clicker', new_user_path %>
+<%= link_to 'New Clicker', new_user_path %> | 
+<%= link_to 'Delete all', destroy_frozen_users_path, :confirm => 'Are you sure you want to delete all frozen users?', :method => :delete %>
 </div>

@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
     where("clicks_given - clicks_received >= ?", MINIMUM_CREDITS).ordered_by_credits
   end
   
+  def self.frozen_users
+     where("clicks_given - clicks_received < ?", MINIMUM_CREDITS)
+  end
+  
   def self.ordered_by_credits
     order("(clicks_given - clicks_received) DESC")
   end

@@ -60,7 +60,15 @@ class AdminsController < ApplicationController
   # PUT /admins/1.xml
   def update
     @admin = Admin.find(params[:id])
-  
+    if params[:admin][:password].blank?
+      params[:admin].delete(:password)
+    end
+    
+    if @admin.id == 1 && @admin != current_admin
+      flash[:error] = 'You can not edit ' + @admin.name
+      redirect_to @admin and return
+    end
+    
     respond_to do |format|
       if @admin.update_attributes(params[:admin])
         # Line below required if using Devise >= 1.2.0
@@ -73,27 +81,25 @@ class AdminsController < ApplicationController
       end
     end
   end
-  # def update
-  #   @admin = Admin.find(params[:id])
-  #   @admin.password = params[:admin][:password]
-  #   if @admin.save
-  #     redirect_to admins_path, :notice => "User updated!"
-  #   else
-  #     render :action => 'edit'
-  #   end
-  # end
-  
   
   # DELETE /admins/1
   # DELETE /admins/1.xml
   def destroy
     @admin = Admin.find(params[:id])
+    
+    if @admin.id == 1
+      respond_to do |format|
+        format.html { flash[:error] = "You can not delete the root admin.";
+                      redirect_to(admins_url) }
+        format.xml  { head :ok }
+      end and return
+    end
+    
     @admin.destroy
-  
+
     respond_to do |format|
       format.html { redirect_to(admins_url, :notice => @admin.name + ' was successfully deleted.') }
       format.xml  { head :ok }
-    end
+    end    
   end
-  
 end

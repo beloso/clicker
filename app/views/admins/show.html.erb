@@ -1,8 +1,12 @@
-<h1><%= @title = 'Viewing Admin' + @admin.name %></h1>
+<h1><%= @title = 'Viewing Admin ' + @admin.name %></h1>
+
+<br />
 
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
-<div id="show_clicker">
+<br />
+
+<div id="user_details">
 <p>
   <b>Name:</b>
   <%= @admin.name %>
@@ -14,7 +18,10 @@
 </p>
 </div>
 
-<div id="show_clicker_footer">
-<%= link_to 'Edit', edit_admin_path(@admin) %> |
-<%= link_to 'Back', admins_path %>
+<br />
+
+<div id="footer_links">
+<%= link_to 'Edit Admin', edit_admin_path(@admin) %> |
+<%= link_to 'To Admin List', admins_path %> |
+<%= link_to 'To Clicker List', users_path %>
 </div>

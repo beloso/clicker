@@ -1,5 +1,7 @@
 <h1><%= @title = 'Creating New Admin' %></h1>
 
+<br />
+
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <br />
@@ -8,6 +10,7 @@
 
 <br />
 
-<div id="new_clicker_footer">
-<%= link_to 'Back', admins_path %>
+<div id="footer_links">
+<%= link_to 'To Admin List', admins_path %> |
+<%= link_to 'To Clicker List', users_path %>
 </div>

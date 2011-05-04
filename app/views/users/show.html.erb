@@ -4,7 +4,7 @@
 
 <br />
 
-<div id="show_clicker">
+<div id="user_details">
 <p>
   <b>Name:</b>
   <%= @user.name %>
@@ -33,7 +33,9 @@
 
 <br />
 
-<div id="show_clicker_footer">
-	<%= link_to 'Edit', edit_user_path(@user) %> |
-	<%= link_to 'Back', users_path %>
+<div id="footer_links">
+<% if admin_signed_in? %>
+<%= link_to 'Edit Clicker', edit_user_path(@user) %> |
+<% end %>
+<%= link_to 'To Clicker List', users_path %>
 </div>

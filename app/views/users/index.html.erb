@@ -2,6 +2,8 @@
 
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
+<br />
+
 <%= form_tag(@users.first ? click_url(:id => @users.first.id) : {} ,:method => :post, :id => 'start_form') do %>
  <%= collection_select(:user, :id, @users, :id, :name, {:prompt => 'Select a User'}, :disabled => !@users.first) %>
  <%= submit_tag 'Start Clicking', :disabled => !@users.first %>
@@ -46,5 +48,5 @@
 <br />
 
 <div id="new_user_button">
-<%= link_to 'New User', new_user_path %>
+<%= link_to 'New Clicker', new_user_path %>
 </div>

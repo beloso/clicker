@@ -26,3 +26,11 @@ User.create([
     :clicks_received => 21
   }
   ])
+  
+Admin.create([
+  {
+    :name => "Admin",
+    :email => "admin@clicker.com",
+    :password => "password"
+  }
+  ])

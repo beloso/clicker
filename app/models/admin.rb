@@ -10,5 +10,18 @@ class Admin < ActiveRecord::Base
   end
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :login, :name, :email, :password, :password_confirmation, :remember_me
+  
+  # Virtual attribute for authenticating by either username or email
+  # This is in addition to a real persisted field like 'username'
+  attr_accessor :login
+  
+  protected
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    login = conditions.delete(:login)
+    where(conditions).where(["name = :value OR email = :value", { :value => login }]).first
+  end
+  
 end

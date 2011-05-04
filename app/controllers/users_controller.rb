@@ -65,7 +65,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to(@user, :notice => @user.name + ' was successfully created.') }
+        format.html { redirect_to(users_path, :notice => @user.name + ' was successfully created.') }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
         format.html { render :action => "new" }
@@ -121,7 +121,7 @@ class UsersController < ApplicationController
   def click
     @user = User.find(params[:id])
     
-    @users_to_click = User.clickable_users
+    @users_to_click ||= User.clickable_users
     @next_user = @users_to_click[@users_to_click.index(@user) + 1]
 
     if session[:current_user_id] || !params[:user][:id].blank?
@@ -141,10 +141,10 @@ class UsersController < ApplicationController
   end
   
   def process_clicks
-      @selected_user ||= User.find(session[:current_user_id])
     
-    unless params[:clicked_user_id].blank?
-      clicked_user = User.find(params[:clicked_user_id])
+    unless params[:clicked_user_id].blank? || session[:current_user_id].blank?
+      clicked_user ||= User.find(params[:clicked_user_id])
+      @selected_user ||= User.find(session[:current_user_id])
     end
     
     case params[:commit]

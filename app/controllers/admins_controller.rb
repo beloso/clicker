@@ -47,7 +47,7 @@ class AdminsController < ApplicationController
 
     respond_to do |format|
       if @admin.save
-        format.html { redirect_to(@admin, :notice => @admin.name + ' was successfully created.') }
+        format.html { redirect_to(admins_path, :notice => @admin.name + ' was successfully created.') }
         format.xml  { render :xml => @admin, :status => :created, :location => @admin }
       else
         format.html { render :action => "new" }

@@ -3,8 +3,7 @@ class Admin < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :token_authenticatable
-  
+
   def email_head
     self.email.split('@')[0]
   end

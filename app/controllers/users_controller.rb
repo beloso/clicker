@@ -154,11 +154,14 @@ class UsersController < ApplicationController
       return
     end
     
-    unless params[:clicked_user].blank?
-      @clicked_user ||= User.find(params[:clicked_user])
+    # debugger
+    if !params[:clicked_user].blank? && session[:current_user] != params[:clicked_user]
+        @clicked_user ||= User.find(params[:clicked_user])
     end
-        
-    process_clicks
+    
+    if @clicked_user
+      process_clicks
+    end
     
     if params[:commit] == 'End Clicking'
       redirect_to :action => 'index' and return
@@ -174,19 +177,19 @@ class UsersController < ApplicationController
   def process_clicks    
     case params[:commit]
     when 'Next User'
-      unless session[:current_user] == params[:clicked_user]
-        User.transaction do
-          @clicked_user.lose_credit
-          @selected_user.gain_credit
-        end
+      @clicked_user.transaction do
+        @selected_user.transaction do
+        @clicked_user.lose_credit
+        @selected_user.gain_credit
+      end
       end
       flash.now[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
     when 'End Clicking'
-      unless session[:current_user] == params[:clicked_user]
-        User.transaction do
-          @clicked_user.lose_credit
-          @selected_user.gain_credit
-        end
+      @clicked_user.transaction do
+        @selected_user.transaction do
+        @clicked_user.lose_credit
+        @selected_user.gain_credit
+      end
       end
       flash[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
     when 'Skip User'

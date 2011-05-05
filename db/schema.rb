@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110503133317) do
+ActiveRecord::Schema.define(:version => 20110505122430) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20110503133317) do
     t.integer  "clicks_received"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "legend"
   end
 
 end

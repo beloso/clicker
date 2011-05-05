@@ -3,13 +3,9 @@
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <%= form_tag(@next_user ? click_url(:id => @next_user) : {} ,:method => :post) do %>
-  <%= hidden_field_tag 'clicked_user_id', @user.id %>
+  <%= hidden_field_tag 'clicked_user', @user.id %>
   <%= submit_tag 'Next User', :disabled => !@next_user %>
   <%= submit_tag 'Skip User', :disabled => !@next_user %>
-<% end %>
-
-<%= form_tag(root_path,:method => :post) do %>
-  <%= hidden_field_tag 'clicked_user_id', @user.id %>
   <%= submit_tag 'End Clicking' %>
 <% end %>
 

@@ -1,5 +1,5 @@
 <div id="clicker_form">
-<%= form_for(@user) do |f| %>
+<%= simple_form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -12,26 +12,13 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %>*<br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :url %>*<br />
-    <%= f.text_field :url %>
-  </div>
-<% if request.fullpath.end_with?("edit") %><!-- start click editors -->
-  <div class="field">
-    <%= f.label :clicks_given %><br />
-    <%= f.text_field :clicks_given %>
-  </div>
-  <div class="field">
-    <%= f.label :clicks_received %><br />
-    <%= f.text_field :clicks_received %>
-  </div>
-<!-- end click editors --><% end %>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <%= f.input :name, :hint => 'DT Username' %>
+    <%= f.input :url, :required => false, :hint => 'DT recruit link' %>
+<% if request.fullpath.end_with?("edit") %>
+	<%= f.input :clicks_given, :hint => 'Clicks this user has given to others.' %>
+	<%= f.input :clicks_received, :hint => 'Clicks this user has received.' %>
+<% end %>
+	<%= f.input :legend %>
+    <%= f.button :submit %>
 <% end %>
 </div>

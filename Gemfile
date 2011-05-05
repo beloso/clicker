@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 # Use stable rails
 gem 'rails', '>= 3.0.6'
 gem 'devise'
+gem 'simple_form'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -31,5 +32,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # and rake tasks are available in development mode:
 group :development, :test do
   # gem 'webrat'
+    gem 'ruby-debug'
   # gem 'RedCloth', '>= 4.1.1'
+	gem 'rails-footnotes', '>= 3.7'
 end

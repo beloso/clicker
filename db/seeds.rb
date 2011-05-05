@@ -10,21 +10,38 @@ User.create([
   {
     :name => "ForcadoRules",
     :url  => "http://www.darkthrone.com/recruiter/outside/B7OE4OA0OD8OD5OF1",
-    :clicks_given => 37,
-    :clicks_received => 47
+    :clicks_given => 25,
+    :clicks_received => 0
   },
   {
     :name => "Angele",
     :url  => "http://www.darkthrone.com/recruiter/outside/B7OD8OE6OC2OF9OD5",
-    :clicks_given => 100,
+    :clicks_given => 10,
     :clicks_received => 10
   },
   {
-    :name => "jonash_",
+    :name => "Dadi",
     :url  => "http://www.darkthrone.com/recruiter/outside/D5OD5OD5OB7OB7OF1OA0",
-    :clicks_given => 49,
-    :clicks_received => 21
-  }
+    :clicks_given => 100,
+    :clicks_received => 15
+  },
+  {
+    :name => "jonash_",
+    :url  => "http://www.darkthrone.com/recruiter/outside/E6OE6OF1OC2OE6OD5",
+    :clicks_given => 25,
+    :clicks_received => 50
+  },
+  {
+    :name => "b0nk1e",
+    :url  => "http://www.darkthrone.com/recruiter/outside/A0OF9OA3OC2OE6OF9OB7",
+    :clicks_given => 100,
+    :clicks_received => 50
+  },
+  {
+    :name => "Witan",
+    :url => "",
+    :legend => true
+  },
   ])
   
 Admin.create([

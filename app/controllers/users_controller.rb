@@ -1,17 +1,38 @@
 class UsersController < ApplicationController
+  MINIMUM_CREDITS = -5
   
   before_filter :authenticate_admin!, :except => [:index, :show, :new, :click, :create]
+  
+  def all_users
+    @users ||= User.ordered_by_credits.to_a
+  end
+  
+  def clickable_users(users)
+    @clickables ||= users.select { |u| u.credits > MINIMUM_CREDITS && !u.legend }.to_a
+  end
+  
+  def legend_users(users)
+    @legends ||= @users.select {|u| u.legend }.to_a
+  end
+  
+  def sorted_users(users)
+    @sorted_by_name ||= users.sort { |a,b| a.name.downcase <=> b.name.downcase }
+  end
   
   # GET /users
   # GET /users.xml
   def index
-    @users = User.clickable_users
-
-    unless session[:current_user_id].blank?
+    @users ||= User.ordered_by_credits.to_a
+    clickable_users(@users)
+    legend_users(@users)
+    sorted_users(@users)
+    # @users.sort! { |a,b| a.name.downcase <=> b.name.downcase }
+    
+    unless session[:current_user].blank?
       process_clicks
     end
     
-    session.delete(:current_user_id)
+    session.delete(:current_user)
     @selected_user = nil
     
     respond_to do |format|
@@ -23,7 +44,7 @@ class UsersController < ApplicationController
   # GET /users/inactive
   # GET /users.xml
   def frozen
-    @users = User.frozen_users
+    @users ||= User.frozen_users.to_a
     
     respond_to do |format|
       format.html # frozen.html.erb
@@ -105,13 +126,10 @@ class UsersController < ApplicationController
   # DELETE /users/
   # DELETE /users/
   def destroy_frozen
-    @users = User.frozen_users
-    @users.each do |user|
-      user.destroy
-    end
-  
+    deleted = User.delete_frozen
+    
     respond_to do |format|
-      format.html { redirect_to :back, :notice => "#{helpers.pluralize(@users.length, 'inactive user was', 'inactive users were')} successfully deleted." }
+      format.html { redirect_to :back, :notice => "#{helpers.pluralize(deleted, 'inactive user was', 'inactive users were')} successfully deleted." }
       format.xml  { head :ok }
     end
   end
@@ -120,19 +138,32 @@ class UsersController < ApplicationController
   # POST /users/1/click.xml
   def click
     @user = User.find(params[:id])
+    all_users
+    clickable_users(@users)
+    @next_user = @clickables[@clickables.index(@user) + 1]
     
-    @users_to_click ||= User.clickable_users
-    @next_user = @users_to_click[@users_to_click.index(@user) + 1]
-
-    if session[:current_user_id] || !params[:user][:id].blank?
-      session[:current_user_id] ||= params[:user][:id]
+    if !params[:user].blank? && !params[:user][:id].blank?
+      session[:current_user] = params[:user][:id]
+    end
+    
+    if !session[:current_user].blank? && @selected_user.nil?
+      @selected_user ||= User.find(session[:current_user])
     else
       flash[:error] = 'You must select a user.'
       redirect_to :action => 'index'
       return
     end
+    
+    unless params[:clicked_user].blank?
+      @clicked_user ||= User.find(params[:clicked_user])
+    end
         
     process_clicks
+    
+    if params[:commit] == 'End Clicking'
+      redirect_to :action => 'index' and return
+    end
+    
     
     respond_to do |format|
       format.html # click.html.erb
@@ -140,32 +171,26 @@ class UsersController < ApplicationController
     end
   end
   
-  def process_clicks
-    
-    unless params[:clicked_user_id].blank? || session[:current_user_id].blank?
-      clicked_user ||= User.find(params[:clicked_user_id])
-      @selected_user ||= User.find(session[:current_user_id])
-    end
-    
+  def process_clicks    
     case params[:commit]
     when 'Next User'
-      unless session[:current_user_id] == params[:clicked_user_id]
+      unless session[:current_user] == params[:clicked_user]
         User.transaction do
-          clicked_user.lose_credit
+          @clicked_user.lose_credit
           @selected_user.gain_credit
         end
       end
-      flash.now[:notice] = 'Successfully clicked ' + clicked_user.name + '.'
+      flash.now[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
     when 'End Clicking'
-      unless session[:current_user_id] == params[:clicked_user_id]
+      unless session[:current_user] == params[:clicked_user]
         User.transaction do
-          clicked_user.lose_credit
+          @clicked_user.lose_credit
           @selected_user.gain_credit
         end
       end
-      flash.now[:notice] = 'Successfully clicked ' + clicked_user.name + '.'
+      flash[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
     when 'Skip User'
-      flash.now[:error] = 'Skipped ' + clicked_user.name + '.'
+      flash.now[:error] = 'Skipped ' + @clicked_user.name + '.'
     end
   end
 end

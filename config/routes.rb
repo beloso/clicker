@@ -20,7 +20,7 @@ Clicker::Application.routes.draw do
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
-  match 'users/:id/click' => 'users#click', :as => :click, :via => :post
+  match 'users/:id/click' => 'users#click', :as => :click, :via => [:post,:get]
   # This route can be invoked with click_url(:id => user.id)
   
  

@@ -15,6 +15,8 @@ class Admin < ActiveRecord::Base
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
   
+  validates :name, :presence => true
+  
   protected
 
   def self.find_for_database_authentication(warden_conditions)

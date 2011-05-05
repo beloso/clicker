@@ -3,14 +3,14 @@
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <br />
-
-<%= form_tag(@users.first ? click_url(:id => @users.first.id) : {} ,:method => :post, :id => 'start_form') do %>
- <%= collection_select(:user, :id, @users, :id, :name, {:prompt => 'Select a User'}, :disabled => !@users.first) %>
- <%= submit_tag 'Start Clicking', :disabled => !@users.first %>
+<%= form_tag(@users.empty? ? {} : click_url(:id => @users.first.id),:method => :post, :id => 'start_form') do %>
+ <%= select("user", "id", @sorted_by_name.collect {|p| [ p.name, p.id ] }, {:prompt => 'Select User'}, :disabled => @users.empty?) %>
+ <%= submit_tag 'Start Clicking', :disabled => @users.empty? %>
 <% end %>
-
 <br />
 
+<% unless @clickables.empty? %>
+<div class="top">Clickers</div>
 <table id="user_list">
   <tr class="top">
     <th>Name</th>
@@ -18,16 +18,15 @@
 	<th>Credits</th>
     <th>Clicks Given</th>
     <th>Clicks Received</th>
-	<% unless @users.length == 0 %>
     <th></th>
 		<% if admin_signed_in? %>
 		<th></th>
 		<th></th>
 		<% end %>
-	<% end %>
   </tr>
+<% end %>
 
-<% @users.each do |user| %>
+<% @clickables.each do |user| %>
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
     <td><%= user.name %></td>
 	<% if true %>
@@ -41,11 +40,41 @@
     <td class="centered"><%= link_to 'Show', user %></td>
     <% if admin_signed_in? %>
       <td class="centered"><%= link_to 'Edit', edit_user_path(user) %></td>
- 	  <td class="centered"><%= link_to 'Delete', user, :confirm => 'Are you sure you want to delete '+user.name+'?', :method => :delete %></td>
+ 	  <td class="centered"><%= link_to 'Delete', user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
  	<% end %>
   </tr>
 <% end %>
 </table>
+
+<br />
+
+<% unless @legends.empty? %>
+<div class="top">Legends</div>
+<table id="user_list">
+  <tr class="top">
+    <th>Name</th>
+    <th>Clicks Given</th>
+    <th></th>
+		<% if admin_signed_in? %>
+		<th></th>
+		<th></th>
+		<% end %>
+  </tr>
+
+<% @legends.each do |user| %>
+  <tr class="<%= cycle('oddrow', 'evenrow') %>">
+    <td><%= user.name %></td>
+    <td class="centered"><%= user.clicks_given %></td>
+    <td class="centered"><%= link_to 'Show', user %></td>
+    <% if admin_signed_in? %>
+      <td class="centered"><%= link_to 'Edit', edit_user_path(user) %></td>
+ 	  <td class="centered"><%= link_to 'Delete', user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
+ 	<% end %>
+  </tr>
+<% end %>
+</table>
+<% end %>
+
 
 <br />
 

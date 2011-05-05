@@ -4,17 +4,17 @@
 
 <br />
 
+<% unless @users.empty? %>
+<div class="top">Inactive Clickers</div>
 <table id="user_list">
   <tr class="top">
     <th>Name</th>
 	<th>Credits</th>
     <th>Clicks Given</th>
     <th>Clicks Received</th>
-	<% unless @users.length == 0 %>
     <th></th>
     <th></th>
     <th></th>
-	<% end %>
   </tr>
 
 <% @users.each do |user| %>
@@ -31,6 +31,8 @@
   </tr>
 <% end %>
 </table>
+<% end %>
+
 
 <br />
 

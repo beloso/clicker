@@ -8,7 +8,11 @@ class UsersController < ApplicationController
   end
   
   def clickable_users(users)
-    @clickables ||= users.select { |u| u.credits > MINIMUM_CREDITS && !u.legend }.to_a
+    @clickables ||= users.select { |u| u.credits >= MINIMUM_CREDITS && !u.legend }.to_a
+  end
+  
+  def frozen_users(users)
+    @frozen ||= users.select { |u| u.credits < MINIMUM_CREDITS && !u.legend }.to_a
   end
   
   def legend_users(users)
@@ -24,6 +28,7 @@ class UsersController < ApplicationController
   def index
     @users ||= User.ordered_by_credits.to_a
     clickable_users(@users)
+    frozen_users(@users)
     legend_users(@users)
     sorted_users(@users)
     # @users.sort! { |a,b| a.name.downcase <=> b.name.downcase }

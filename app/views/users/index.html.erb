@@ -75,6 +75,38 @@
 </table>
 <% end %>
 
+<br />
+
+<% unless @frozen.empty? %>
+<div class="top">Inactive Clickers</div>
+<table id="user_list">
+  <tr class="top">
+    <th>Name</th>
+	<th>Credits</th>
+    <th>Clicks Given</th>
+    <th>Clicks Received</th>
+    <th></th>
+    <% if admin_signed_in? %>
+    <th></th>
+    <th></th>
+ 	<% end %>
+  </tr>
+
+<% @frozen.each do |user| %>
+  <tr class="<%= cycle('oddrow', 'evenrow') %>">
+    <td><%= user.name %></td>
+	<td class="centered"><%= user.credits %></td>
+    <td class="centered"><%= user.clicks_given %></td>
+    <td class="centered"><%= user.clicks_received %></td>
+    <td class="centered"><%= link_to 'Show', user %></td>
+    <% if admin_signed_in? %>
+      <td class="centered"><%= link_to 'Edit', edit_user_path(user) %></td>
+ 	  <td class="centered"><%= link_to 'Delete', user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
+ 	<% end %>
+  </tr>
+<% end %>
+</table>
+<% end %>
 
 <br />
 

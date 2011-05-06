@@ -1,14 +1,22 @@
 <h1><%= @title = "Clicking " + @user.name %></h1>
 
+<br />
+
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
-<%= form_tag(@next_user ? click_url(:id => @next_user) : {} ,:method => :post) do %>
+<br />
+
+<%= form_tag(@next_user ? click_url(:id => @next_user) : {} ,:method => :post, :class => 'click_user') do %>
   <%= hidden_field_tag 'clicked_user', @user.id %>
   <%= submit_tag 'Next User', :disabled => !@next_user %>
   <%= submit_tag 'Skip User', :disabled => !@next_user %>
   <%= submit_tag 'End Clicking' %>
 <% end %>
 
-<iframe src=<%= @user.url %>>
-  <p>Your browser does not support iframes.</p>
-</iframe>
+<br />
+
+<div class="click_frame_div" style="text-align:center;"> 
+<iframe id="dt_frame" name="dt_frame" src=<%= @user.url %> frameborder="0" scrolling="no" marginheight="0" width="100%" height="100%">
+Your browser does not support iframes!
+</iframe> 
+</div>

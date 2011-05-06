@@ -1,4 +1,4 @@
-<h1><%= @title = "Clicker List" %></h1>
+<h1><%= @title = "Clicker" %></h1>
 
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
@@ -28,23 +28,23 @@
 
 <% @clickables.each do |user| %>
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
-    <td><%= user.name %></td>
+    <td class="name"><%= user.name %></td>
 	<% if true %>
     <td class="centered">
 	<%= form_tag(click_url(:id => user.id) ,:method => :post, :onSubmit => "hidden=document.getElementById('selected_user"+user.id.to_s+"');
 																			drop=document.getElementById('user_id');
 																			document.getElementById('selected_user"+user.id.to_s+"').value=drop[drop.selectedIndex].value;") do %>
  		<%= hidden_field_tag 'selected_user'+user.id.to_s %>
-		<%= submit_tag 'Click' %>
+		<%= submit_tag 'click' %>
 		<% end %></td>
 	<% end %>
 	<td class="centered"><%= user.credits %></td>
     <td class="centered"><%= user.clicks_given %></td>
     <td class="centered"><%= user.clicks_received %></td>
-    <td class="centered"><%= link_to 'Show', user %></td>
+    <td class="centered-crud"><%= link_to image_tag('show.png', :width => 20, :height => 20), user %></td>
     <% if admin_signed_in? %>
-      <td class="centered"><%= link_to 'Edit', edit_user_path(user) %></td>
- 	  <td class="centered"><%= link_to 'Delete', user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
+      <td class="centered-crud"><%= link_to image_tag('edit.png', :width => 20, :height => 20), edit_user_path(user) %></td>
+ 	  <td class="centered-crud"><%= link_to image_tag('delete.png', :width => 20, :height => 20), user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
  	<% end %>
   </tr>
 <% end %>
@@ -67,12 +67,12 @@
 
 <% @legends.each do |user| %>
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
-    <td><%= user.name %></td>
+    <td class="name"><%= user.name %></td>
     <td class="centered"><%= user.clicks_given %></td>
-    <td class="centered"><%= link_to 'Show', user %></td>
+    <td class="centered-crud"><%= link_to image_tag('show.png', :width => 20, :height => 20), user %></td>
     <% if admin_signed_in? %>
-      <td class="centered"><%= link_to 'Edit', edit_user_path(user) %></td>
- 	  <td class="centered"><%= link_to 'Delete', user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
+      <td class="centered-crud"><%= link_to image_tag('edit.png', :width => 20, :height => 20), edit_user_path(user) %></td>
+ 	  <td class="centered-crud"><%= link_to image_tag('delete.png', :width => 20, :height => 20), user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
  	<% end %>
   </tr>
 <% end %>
@@ -98,14 +98,14 @@
 
 <% @frozen.each do |user| %>
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
-    <td><%= user.name %></td>
+    <td class="name"><%= user.name %></td>
 	<td class="centered"><%= user.credits %></td>
     <td class="centered"><%= user.clicks_given %></td>
     <td class="centered"><%= user.clicks_received %></td>
-    <td class="centered"><%= link_to 'Show', user %></td>
+    <td class="centered-crud"><%= link_to image_tag('show.png', :width => 20, :height => 20), user %></td>
     <% if admin_signed_in? %>
-      <td class="centered"><%= link_to 'Edit', edit_user_path(user) %></td>
- 	  <td class="centered"><%= link_to 'Delete', user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
+      <td class="centered-crud"><%= link_to image_tag('edit.png', :width => 20, :height => 20), edit_user_path(user) %></td>
+ 	  <td class="centered-crud"><%= link_to image_tag('delete.png', :width => 20, :height => 20), user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
  	<% end %>
   </tr>
 <% end %>
@@ -117,7 +117,7 @@
 <div id="new_user_button">
 <%= link_to 'New Clicker', new_user_path %>
 <% if admin_signed_in? %>
-| <%= link_to 'Delete all', destroy_frozen_users_path, :confirm => 'Are you sure you want to delete all frozen users?', :method => :delete %> |
-<%= link_to 'Reset', reset_counters_users_path, :method => :put %>
+| <%= link_to 'Delete Inactive', destroy_frozen_users_path, :confirm => 'Are you sure you want to delete all frozen users?', :method => :delete %> |
+<%= link_to 'Reset Clicks', reset_counters_users_path, :method => :put %>
 <% end %>
 </div>

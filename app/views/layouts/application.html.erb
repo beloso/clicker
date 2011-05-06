@@ -24,9 +24,6 @@
 		<li><%= link_to 'Sign In', new_admin_session_path %> |</li>
 		<% end %>
 		<%= link_to 'Clicker List', users_path %>
-		<% if admin_signed_in? %>
-		 | <%= link_to 'Frozen List', frozen_users_path %>
-		<% end %>
 		</ul>
 	</div>
 		<%= yield %>

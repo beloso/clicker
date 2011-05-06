@@ -71,7 +71,6 @@ class AdminsController < ApplicationController
     
     respond_to do |format|
       if @admin.update_attributes(params[:admin])
-        # Line below required if using Devise >= 1.2.0
         sign_in(@admin, :bypass => true) if @admin == current_admin
         format.html { redirect_to(@admin, :notice => @admin.name + ' was successfully updated.') }
         format.xml  { head :ok }

@@ -2,27 +2,7 @@ class UsersController < ApplicationController
   MINIMUM_CREDITS = -5
   
   before_filter :authenticate_admin!, :except => [:index, :show, :new, :click, :create]
-  
-  def all_users
-    @users ||= User.ordered_by_credits.to_a
-  end
-  
-  def clickable_users(users)
-    @clickables ||= users.select { |u| u.credits >= MINIMUM_CREDITS && !u.legend }.to_a
-  end
-  
-  def frozen_users(users)
-    @frozen ||= users.select { |u| u.credits < MINIMUM_CREDITS && !u.legend }.to_a
-  end
-  
-  def legend_users(users)
-    @legends ||= @users.select {|u| u.legend }.to_a
-  end
-  
-  def sorted_users(users)
-    @sorted_by_name ||= users.sort { |a,b| a.name.downcase <=> b.name.downcase }
-  end
-  
+    
   # GET /users
   # GET /users.xml
   def index
@@ -150,18 +130,11 @@ class UsersController < ApplicationController
   # POST /users/1/click.xml
   def click
     @user = User.find(params[:id])
-    if session[:click_order].blank?
-      all_users
-      clickable_users(@users)
-      session[:click_order] = @clickables.collect { |u| u.id }
-    end
-    @next_user = session[:click_order][session[:click_order].index(@user.id) + 1]
     
-    if !params[:user].blank? && !params[:user][:id].blank?
-      session[:current_user] = params[:user][:id]
-    elsif !params["selected_user" + @user.id.to_s].blank?
-      session[:current_user] = params["selected_user" + @user.id.to_s].to_i
-    end
+    session[:click_order] ||= load_click_order
+    session[:current_user] ||= load_current_user
+        
+    @next_user = next_in_array @user.id, session[:click_order]
     
     if !session[:current_user].blank? && @selected_user.nil?
       @selected_user ||= User.find(session[:current_user])
@@ -171,14 +144,14 @@ class UsersController < ApplicationController
       return
     end
     
-    # debugger
-    if !params[:clicked_user].blank? && session[:current_user] != params[:clicked_user]
+    if !params[:clicked_user].blank?
         @clicked_user ||= User.find(params[:clicked_user])
-        flash.now[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
     end
     
-    if @clicked_user
-      process_clicks
+    if @clicked_user != @selected_user
+      process_click
+    else
+      flash[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
     end
     
     if params[:commit] == 'End Clicking'
@@ -191,7 +164,49 @@ class UsersController < ApplicationController
     end
   end
   
-  def process_clicks
+  private
+  
+  def all_users
+    @users ||= User.ordered_by_credits.to_a
+  end
+  
+  def clickable_users(users)
+    @clickables ||= users.select { |u| u.credits >= MINIMUM_CREDITS && !u.legend }.to_a
+  end
+  
+  def frozen_users(users)
+    @frozen ||= users.select { |u| u.credits < MINIMUM_CREDITS && !u.legend }.to_a
+  end
+  
+  def legend_users(users)
+    @legends ||= @users.select {|u| u.legend }.to_a
+  end
+  
+  def sorted_users(users)
+    @sorted_by_name ||= users.sort { |a,b| a.name.downcase <=> b.name.downcase }
+  end
+  
+  def next_in_array(elem,array)
+    array[ array.index(elem) + 1 ]
+  end
+  
+  def load_click_order
+    if session[:click_order].blank?
+      all_users
+      clickable_users @users 
+      @clickables.collect { |u| u.id }
+    end
+  end
+  
+  def load_current_user
+    if !params[:user].blank? && !params[:user][:id].blank?
+      session[:current_user] = params[:user][:id]
+    elsif !params["selected_user" + @user.id.to_s].blank?
+      session[:current_user] = params["selected_user" + @user.id.to_s].to_i
+    end
+  end
+  
+  def process_click
     case params[:commit]
     when 'Next User'
       User.transaction do

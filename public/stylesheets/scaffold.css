@@ -78,7 +78,7 @@ div.field, div.actions {
 }
 
 #main 
-	#user_list, #start_form, #new_user_button, 
+	table.user_list, #start_form, #new_user_button, 
 	#clicker_form, #user_details, #footer_links, 
 	#devise_forms
 	{

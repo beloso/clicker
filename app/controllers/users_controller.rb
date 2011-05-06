@@ -31,12 +31,8 @@ class UsersController < ApplicationController
     frozen_users(@users)
     legend_users(@users)
     sorted_users(@users)
-    # @users.sort! { |a,b| a.name.downcase <=> b.name.downcase }
     
-    unless session[:current_user].blank?
-      process_clicks
-    end
-    
+    session.delete(:click_order)
     session.delete(:current_user)
     @selected_user = nil
     
@@ -115,6 +111,17 @@ class UsersController < ApplicationController
       end
     end
   end
+  
+  # PUT /users/
+  # PUT /users/
+  def reset_counters
+    changed = User.reset_counters
+
+    respond_to do |format|
+      format.html { redirect_to(:back, :notice => "#{helpers.pluralize(changed, 'user was reset', 'users were reset')}") }
+      format.xml  { head :ok }
+    end
+  end
 
   # DELETE /users/1
   # DELETE /users/1.xml
@@ -143,12 +150,17 @@ class UsersController < ApplicationController
   # POST /users/1/click.xml
   def click
     @user = User.find(params[:id])
-    all_users
-    clickable_users(@users)
-    @next_user = @clickables[@clickables.index(@user) + 1]
+    if session[:click_order].blank?
+      all_users
+      clickable_users(@users)
+      session[:click_order] = @clickables.collect { |u| u.id }
+    end
+    @next_user = session[:click_order][session[:click_order].index(@user.id) + 1]
     
     if !params[:user].blank? && !params[:user][:id].blank?
       session[:current_user] = params[:user][:id]
+    elsif !params["selected_user" + @user.id.to_s].blank?
+      session[:current_user] = params["selected_user" + @user.id.to_s].to_i
     end
     
     if !session[:current_user].blank? && @selected_user.nil?
@@ -162,6 +174,7 @@ class UsersController < ApplicationController
     # debugger
     if !params[:clicked_user].blank? && session[:current_user] != params[:clicked_user]
         @clicked_user ||= User.find(params[:clicked_user])
+        flash.now[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
     end
     
     if @clicked_user
@@ -172,29 +185,24 @@ class UsersController < ApplicationController
       redirect_to :action => 'index' and return
     end
     
-    
     respond_to do |format|
       format.html # click.html.erb
       format.xml  { render :xml => @user }
     end
   end
   
-  def process_clicks    
+  def process_clicks
     case params[:commit]
     when 'Next User'
-      @clicked_user.transaction do
-        @selected_user.transaction do
+      User.transaction do
         @clicked_user.lose_credit
         @selected_user.gain_credit
-      end
       end
       flash.now[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
     when 'End Clicking'
-      @clicked_user.transaction do
-        @selected_user.transaction do
+      User.transaction do
         @clicked_user.lose_credit
         @selected_user.gain_credit
-      end
       end
       flash[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
     when 'Skip User'

@@ -10,9 +10,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110505122430) do
+ActiveRecord::Schema.define(:version => 20110503114225) do
 
   create_table "admins", :force => true do |t|
+    t.string   "name",                                  :default => "", :null => false
     t.string   "email",                                 :default => "", :null => false
     t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
     t.string   "reset_password_token"
@@ -23,23 +24,25 @@ ActiveRecord::Schema.define(:version => 20110505122430) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
   end
 
   add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
+  add_index "admins", ["name"], :name => "index_admins_on_name", :unique => true
   add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "name",            :null => false
-    t.string   "url",             :null => false
+    t.string   "name",                            :null => false
+    t.string   "url",             :default => ""
     t.integer  "clicks_given"
     t.integer  "clicks_received"
+    t.boolean  "legend"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "legend"
   end
+
+  add_index "users", ["id"], :name => "index_users_on_id", :unique => true
+  add_index "users", ["name"], :name => "index_users_on_name", :unique => true
 
 end

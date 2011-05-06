@@ -1,7 +1,10 @@
 <div id=flash>
 <%- flash.each do |key, msg| -%>
-	<div id="<%= key %>" onclick="$(this).fade({ duration: 0.5 })">
+	<div id="<%= key %>">
 		<%= msg %>
 	</div>
+	<script type="text/javascript">
+	    setTimeout("new Effect.Fade('<%= key %>');", 1000)
+	</script>
 <%- end -%>
 </div>

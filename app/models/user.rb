@@ -5,12 +5,13 @@ class User < ActiveRecord::Base
     
   def default_values
     self.legend            = false unless self.legend
+    ##self.url               = nil unless self.legend
     if isClickable?
       self.clicks_given    = 25 unless self.clicks_given
       self.clicks_received = 0  unless self.clicks_received
     else
-      self.clicks_given    = 0
-      self.clicks_received = 0
+      self.clicks_given    = 0 unless self.clicks_given
+      self.clicks_received = 0 unless self.clicks_received
     end 
   end
   
@@ -44,14 +45,19 @@ class User < ActiveRecord::Base
     order("(clicks_given - clicks_received) DESC")
   end
   
+  def self.reset_counters
+    update_all "clicks_given = 25, clicks_received = 0" , "legend = 'f'"
+    update_all "clicks_given = 0, clicks_received = 0" , "legend = 't'"
+  end
+  
   def gain_credit
     self.clicks_given += 1
-    self.save!
+    self.save
   end
   
   def lose_credit
     self.clicks_received += 1
-    self.save!
+    self.save
   end
   
   ### Validations
@@ -61,7 +67,7 @@ class User < ActiveRecord::Base
   
   validates                 :url,  :presence => true, :if => :isClickable?
   validates_format_of       :url,  :with     => /\A(http\:\/\/)?(gold|www)?(\.)?darkthrone\.com\/recruiter\/outside\/[A-Z0-9]+\Z/, :if => :isClickable?
-  validates_uniqueness_of   :url,  :if => :isClickable?
+  validates_uniqueness_of   :url,  :if       => :isClickable?
   
   validates_numericality_of :clicks_given,    :only_integer => true, :greater_than_or_equal_to => 0
   validates_numericality_of :clicks_received, :only_integer => true, :greater_than_or_equal_to => 0

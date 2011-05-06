@@ -13,7 +13,7 @@
 	<div id="nav_bar_div">
 		<ul id="nav_bar">
 		<% unless @selected_user.nil? %>
-		<li> Clicking for <%= @selected_user.name %> |</li>
+		<li> Clicking as <%= @selected_user.name %> |</li>
 		<% end %>
 		<% if admin_signed_in? %>
 		<li>Hi <%= current_adm %>! |</li>

@@ -39,7 +39,6 @@ User.create([
   },
   {
     :name => "Witan",
-    :url => "",
     :legend => true
   },
   ])

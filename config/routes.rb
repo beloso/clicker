@@ -2,8 +2,9 @@ Clicker::Application.routes.draw do
   devise_for :admins
 
   resources :users do 
-    collection do 
+    collection do
       get 'frozen'
+      put 'reset_counters'
       delete 'destroy_frozen'
     end
   end

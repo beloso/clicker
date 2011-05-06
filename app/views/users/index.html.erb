@@ -30,8 +30,12 @@
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
     <td><%= user.name %></td>
 	<% if true %>
-    <td class="centered"><%= form_tag(click_url(:id => user.id) ,:method => :get) do %>
- 		<%= submit_tag 'Click' %>
+    <td class="centered">
+	<%= form_tag(click_url(:id => user.id) ,:method => :post, :onSubmit => "hidden=document.getElementById('selected_user"+user.id.to_s+"');
+																			drop=document.getElementById('user_id');
+																			document.getElementById('selected_user"+user.id.to_s+"').value=drop[drop.selectedIndex].value;") do %>
+ 		<%= hidden_field_tag 'selected_user'+user.id.to_s %>
+		<%= submit_tag 'Click' %>
 		<% end %></td>
 	<% end %>
 	<td class="centered"><%= user.credits %></td>
@@ -112,4 +116,8 @@
 
 <div id="new_user_button">
 <%= link_to 'New Clicker', new_user_path %>
+<% if admin_signed_in? %>
+| <%= link_to 'Delete all', destroy_frozen_users_path, :confirm => 'Are you sure you want to delete all frozen users?', :method => :delete %> |
+<%= link_to 'Reset', reset_counters_users_path, :method => :put %>
+<% end %>
 </div>

@@ -105,6 +105,12 @@ img.action {
 	margin-bottom: -3px;
 }
 
+input.action {
+	width:20px;
+	height:20px;
+	margin-bottom: -3px;
+}
+
 #main #nav_bar {
 	list-style-type: none;
 	text-align: right;
@@ -173,9 +179,11 @@ table td.name {
 
 table td.centered {
 	text-align: center;
+	width:auto;
 }
 
-table td.centered-crud {
+table td.centered-crud,
+table td.centered-click {
 	text-align: center;
 	width: 25px;
 }
@@ -189,6 +197,10 @@ table td.centered-crud a a:hover {
 	width: 90%;
 	margin-right: auto;
 	margin-left: auto;
+}
+
+div.footer{
+	text-align: center;
 }
 
 #main div.click_frame {

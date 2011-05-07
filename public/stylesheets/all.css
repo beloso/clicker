@@ -99,6 +99,12 @@ textarea.batch_users {
 	background-color: lightgreen; 
 }
 
+img.action {
+	width:16px;
+	height:16px;
+	padding-top: 5px;
+}
+
 #main #nav_bar {
 	list-style-type: none;
 	text-align: right;

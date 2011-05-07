@@ -19,10 +19,10 @@
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
     <td class="name"><%= admin.name %></td>
     <td class="centered"><%= admin.last_sign_in_at %></td>
-    <td class="centered-crud"><%= link_to image_tag('show.svg', :width => 20, :height => 20), admin %></td>
+    <td class="centered-crud"><%= link_to image_tag('show.svg', :class => 'action'), admin %></td>
     <% if admin_signed_in? %>
-      <td class="centered-crud"><%= link_to image_tag('edit.svg', :width => 20, :height => 20), edit_admin_path(admin) %></td>
- 	  <td class="centered-crud"><%= link_to image_tag('remove.svg', :width => 20, :height => 20), admin, :confirm => 'Are you sure you want to delete '+admin.name+'?', :method => :delete %></td>
+      <td class="centered-crud"><%= link_to image_tag('edit.svg', :class => 'action'), edit_admin_path(admin) %></td>
+ 	  <td class="centered-crud"><%= link_to image_tag('remove.svg', :class => 'action'), admin, :confirm => 'Are you sure you want to delete '+admin.name+'?', :method => :delete %></td>
  	<% end %>
   </tr>
 <% end %>
@@ -31,5 +31,5 @@
 <br />
 
 <div class="bottom_nav">
-<%= link_to image_tag('new.svg', :width => 20, :height => 20) + ' New Admin', new_admin_path %>
+<%= link_to image_tag('new.svg', :class => 'action') + ' New Admin', new_admin_path %>
 </div>

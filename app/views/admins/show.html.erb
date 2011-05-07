@@ -22,6 +22,7 @@
 
 <div id="footer_links">
 <%= link_to 'Edit Admin', edit_admin_path(@admin) %> |
+<%= link_to 'Delete Admin', @admin, :confirm => 'Are you sure you want to delete ' + @admin.name + '?', :method => :delete %> |
 <%= link_to 'To Admin List', admins_path %> |
 <%= link_to 'To Clicker List', users_path %>
 </div>

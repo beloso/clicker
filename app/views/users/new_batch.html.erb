@@ -6,13 +6,13 @@
 
 <div class="clicker_form">
 <%= form_tag :controller => "users" , :action => "create", :method => :post do %>
-	<%= text_area(:user, :url, :cols => 100, :rows => 20, :class => 'batch_users') %> <br />
+	<%= text_area(:user, :urls, :class => 'batch_users') %> <br />
 	<%= submit_tag "Add Clickers" %>
 <% end %>
 </div>
 
 <br />
 
-<div id="footer_links">
+<div class="bottom_nav">
 	<%= link_to 'To Clicker List', users_path %>
 </div>

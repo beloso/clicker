@@ -37,10 +37,10 @@
 
 <br />
 
-<div id="footer_links">
+<div class="bottom_nav">
 <% if admin_signed_in? %>
-<%= link_to 'Edit Clicker', edit_user_path(@user) %> |
-<%= link_to 'Delete Clicker', @user, :confirm => 'Are you sure you want to delete ' + @user.name + '?', :method => :delete %> |
+<%= link_to image_tag('edit.svg', :width => 20, :height => 20) + ' Edit Clicker', edit_user_path(@user) %> |
+<%= link_to image_tag('remove.svg', :width => 20, :height => 20) + ' Delete Clicker', @user, :confirm => 'Are you sure you want to delete ' + @user.name + '?', :method => :delete %> |
 <% end %>
-<%= link_to 'To Clicker List', users_path %>
+<%= link_to image_tag('back.svg', :width => 20, :height => 20) + ' To Clicker List', users_path %>
 </div>

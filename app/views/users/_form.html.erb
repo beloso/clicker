@@ -12,8 +12,8 @@
     </div>
   <% end %>
 
+  	<%= f.input :url, :required => false, :hint => 'DT recruit link' %>
     <%= f.input :name, :required => false, :hint => 'DT Username' %>
-    <%= f.input :url, :required => false, :hint => 'DT recruit link' %>
 <% if request.fullpath.end_with?("edit") %>
 	<%= f.input :clicks_given, :hint => 'Clicks this user has given to others.' %>
 	<%= f.input :clicks_received, :hint => 'Clicks this user has received.' %>

@@ -63,13 +63,13 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.xml
   def create
-    if params[:user][:url]
-      @urls = params[:user][:url].split(/[\r\n]+/)
+    if params[:user][:urls]
+      @urls = params[:user][:urls].split(/[\r\n]+/)
       @urls.each do |url|
         @user = User.new(:url => url)
         @user.save
       end
-      redirect_to(users_path, :notice => @user.name + ' was successfully created.')
+      redirect_to(users_path, :notice => "#{helpers.pluralize(@urls.length, 'user was added', 'users were added')}")
       return
     else
       @user = User.new(params[:user])

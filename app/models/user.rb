@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     
   def default_values
     self.legend            = false     unless self.legend
-    if isClickable?
+    if isClickable? && hasLink?
       self.name            = find_name if     self.name.blank?
       self.clicks_given    = 25        unless self.clicks_given
       self.clicks_received = 0         unless self.clicks_received
@@ -20,7 +20,15 @@ class User < ActiveRecord::Base
   end
   
   def isClickable?
-    self.legend == false
+    !self.legend 
+  end
+  
+  def hasLink?
+    !self.url.blank?
+  end
+  
+  def hasName?
+    !self.name.blank?
   end
   
   def credits
@@ -72,8 +80,8 @@ class User < ActiveRecord::Base
   
   ### Validations
   
-  validates                 :name, :presence => true
-  validates_uniqueness_of   :name
+  validates                 :name, :presence => true, :if => :hasLink?
+  validates_uniqueness_of   :name, :if => :hasLink?
   
   validates                 :url,  :presence => true, :if => :isClickable?
   validates_format_of       :url,  :with     => /\A(http\:\/\/)?(gold|www)?(\.)?darkthrone\.com\/recruiter\/outside\/[A-Z0-9]+\Z/, :if => :isClickable?

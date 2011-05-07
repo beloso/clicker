@@ -7,13 +7,10 @@
 <br />
 
 <div class="devise_forms">
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+<%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
-
-  <p><%= f.label :email %><br />
-  <%= f.email_field :email %></p>
-
-  <p><%= f.submit "Reset password" %></p>
+  <%= f.input :email %>
+  <%= f.button :submit, :value => 'Reset Password' %>
 <% end %>
 </div>
 

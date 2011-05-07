@@ -4,7 +4,7 @@
 
 <br />
 <%= form_tag(@users.empty? ? {} : click_url(:id => @users.first.id),:method => :post, :id => 'start_form') do %>
- <%= select("user", "id", @sorted_by_name.collect {|p| [ p.name, p.id ] }, {:prompt => 'Select User'}, :disabled => @users.empty?) %>
+ <%= select("user", "id", @sorted_by_name.collect { |p| [ p.name, p.id ] }, {:prompt => 'Select User'}, :disabled => @users.empty?) %>
  <%= submit_tag 'Start Clicking', :disabled => @users.empty? %>
 <% end %>
 <br />

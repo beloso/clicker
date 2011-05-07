@@ -21,17 +21,6 @@ class UsersController < ApplicationController
       format.xml  { render :xml => @users }
     end
   end
-  
-  # GET /users/inactive
-  # GET /users.xml
-  def frozen
-    @users ||= User.frozen_users.to_a
-    
-    respond_to do |format|
-      format.html # frozen.html.erb
-      format.xml  { render :xml => @users }
-    end
-  end
 
   # GET /users/1
   # GET /users/1.xml
@@ -110,7 +99,7 @@ class UsersController < ApplicationController
     @user.destroy
   
     respond_to do |format|
-      format.html { redirect_to :back, :notice => @user.name + ' was successfully deleted.' }
+      format.html { redirect_to users_path, :notice => @user.name + ' was successfully deleted.' }
       format.xml  { head :ok }
     end
   end

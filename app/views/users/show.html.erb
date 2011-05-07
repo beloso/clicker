@@ -10,16 +10,19 @@
   <%= @user.name %>
 </p>
 
+<% unless @user.legend %>
 <p>
-  <b>URL:</b>
+  <b>Recruit Link:</b>
   <a href=<%= @user.url %>> <%= @user.url %> </a>
 </p>
+<% end %>
 
 <p>
   <b>Clicks Given:</b>
   <%= @user.clicks_given %>
 </p>
 
+<% unless @user.legend %>
 <p>
   <b>Clicks Received:</b>
   <%= @user.clicks_received %>
@@ -29,6 +32,7 @@
   <b>Credits:</b>
   <%= @user.credits %>
 </p>
+<% end %>
 </div>
 
 <br />
@@ -36,6 +40,7 @@
 <div id="footer_links">
 <% if admin_signed_in? %>
 <%= link_to 'Edit Clicker', edit_user_path(@user) %> |
+<%= link_to 'Delete Clicker', @user, :confirm => 'Are you sure you want to delete ' + @user.name + '?', :method => :delete %> |
 <% end %>
 <%= link_to 'To Clicker List', users_path %>
 </div>

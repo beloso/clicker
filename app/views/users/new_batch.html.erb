@@ -1,0 +1,18 @@
+<h1><%= @title = 'Adding New Clickers' %></h1>
+
+<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
+
+<br />
+
+<div class="clicker_form">
+<%= form_tag :controller => "users" , :action => "create", :method => :post do %>
+	<%= text_area(:user, :url, :cols => 100, :rows => 20, :class => 'batch_users') %> <br />
+	<%= submit_tag "Add Clickers" %>
+<% end %>
+</div>
+
+<br />
+
+<div id="footer_links">
+	<%= link_to 'To Clicker List', users_path %>
+</div>

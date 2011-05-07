@@ -1,17 +1,21 @@
+require 'open-uri'
+
 class User < ActiveRecord::Base
   MINIMUM_CREDITS = -5
+  
+  REG = /([a-zA-Z0-9_]*) has recruited too many people today.|You are being recruited into the army of ([a-zA-Z0-9_]*)/
   
   before_validation :default_values
     
   def default_values
-    self.legend            = false unless self.legend
-    ##self.url               = nil unless self.legend
+    self.legend            = false     unless self.legend
     if isClickable?
-      self.clicks_given    = 25 unless self.clicks_given
-      self.clicks_received = 0  unless self.clicks_received
+      self.name            = find_name if     self.name.blank?
+      self.clicks_given    = 25        unless self.clicks_given
+      self.clicks_received = 0         unless self.clicks_received
     else
-      self.clicks_given    = 0 unless self.clicks_given
-      self.clicks_received = 0 unless self.clicks_received
+      self.clicks_given    = 0         unless self.clicks_given
+      self.clicks_received = 0         unless self.clicks_received
     end 
   end
   
@@ -21,6 +25,12 @@ class User < ActiveRecord::Base
   
   def credits
     self.clicks_given - self.clicks_received
+  end
+  
+  def find_name
+    doc = Nokogiri::HTML(open(self.url))
+
+    doc.text.scan(REG).flatten.compact.first    
   end
   
   ### Class Methods

@@ -1,4 +1,4 @@
-<div id="clicker_form">
+<div class="clicker_form">
 <%= simple_form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -12,7 +12,7 @@
     </div>
   <% end %>
 
-    <%= f.input :name, :hint => 'DT Username' %>
+    <%= f.input :name, :required => false, :hint => 'DT Username' %>
     <%= f.input :url, :required => false, :hint => 'DT recruit link' %>
 <% if request.fullpath.end_with?("edit") %>
 	<%= f.input :clicks_given, :hint => 'Clicks this user has given to others.' %>

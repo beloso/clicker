@@ -44,6 +44,17 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/new
+  # GET /users/new.xml
+  def new_batch
+    @users
+    
+    respond_to do |format|
+      format.html # new_batch.html.erb
+      format.xml  { render :xml => @user }
+    end
+  end
+
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
@@ -52,7 +63,17 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.xml
   def create
-    @user = User.new(params[:user])
+    if params[:user][:url]
+      @urls = params[:user][:url].split(/[\r\n]+/)
+      @urls.each do |url|
+        @user = User.new(:url => url)
+        @user.save
+      end
+      redirect_to(users_path, :notice => @user.name + ' was successfully created.')
+      return
+    else
+      @user = User.new(params[:user])
+    end
 
     respond_to do |format|
       if @user.save

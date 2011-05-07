@@ -3,7 +3,7 @@ Clicker::Application.routes.draw do
 
   resources :users do 
     collection do
-      get 'frozen'
+      get 'new_batch'
       put 'reset_counters'
       delete 'destroy_frozen'
     end

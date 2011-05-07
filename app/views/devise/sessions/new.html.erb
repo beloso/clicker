@@ -6,7 +6,7 @@
 
 <br />
 
-<div id="devise_forms">
+<div class="devise_forms">
 <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 	<%= f.input :login, :required => true, :label => 'Login', :hint => 'Username or Email'%>
   	<%= f.input :password, :size => 50 %>

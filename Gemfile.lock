@@ -47,6 +47,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    nokogiri (1.4.4)
     orm_adapter (0.0.4)
     polyglot (0.3.1)
     rack (1.2.2)
@@ -89,6 +90,7 @@ PLATFORMS
 DEPENDENCIES
   devise
   hirb
+  nokogiri
   rails (= 3.0.6)
   ruby-debug
   simple_form

@@ -79,13 +79,17 @@ div.field, div.actions {
 
 #main 
 	table.user_list, #start_form, #new_user_button, 
-	#clicker_form, #user_details, #footer_links, 
-	#devise_forms
+	div.clicker_form, #user_details, #footer_links, 
+	div.devise_forms
 	{
 		width: 75%;
 		margin-left: auto;
 		margin-right: auto;
 	}
+	
+textarea.batch_users {
+  width:100%;
+}
 
 #main #nav_bar_div {
 	width: 100%;

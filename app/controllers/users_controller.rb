@@ -136,8 +136,8 @@ class UsersController < ApplicationController
     end
   end
   
-  # POST /users/1/click
-  # POST /users/1/click.xml
+  # GET /users/1/click
+  # GET /users/1/click.xml
   def click
     @user = User.find(params[:id])
     

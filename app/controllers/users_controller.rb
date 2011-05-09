@@ -155,6 +155,8 @@ class UsersController < ApplicationController
       return
     end
     
+    process_click
+    
     if params[:commit] == 'End Clicking'
       redirect_to :action => 'index' and return
     end

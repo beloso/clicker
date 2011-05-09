@@ -22,6 +22,17 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users
+  # GET /users.xml
+  def search
+    @users ||= User.where("name LIKE ?","%#{params[:search]}%")
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @users }
+    end
+  end
+
   # GET /users/1
   # GET /users/1.xml
   def show

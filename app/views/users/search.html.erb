@@ -1,0 +1,43 @@
+<h1><%= @title = "Clicker" %></h1>
+
+<br />
+
+<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
+
+<br />
+<div class="top_forms">
+	<%= render :partial => 'search' %>
+	<div class="clear"></div>
+</div>
+<br />
+
+<% unless @users.empty? %>
+<div class="top">Clickers</div>
+<table class="user_list">
+  <tr class="top">
+    <th>Name</th>
+	<th>Credits</th>
+    <th>Clicks Given</th>
+    <th>Clicks Received</th>
+    <th></th>
+		<% if admin_signed_in? %>
+		<th></th>
+		<th></th>
+		<% end %>
+  </tr>
+<% end %>
+
+<% @users.each do |user| %>
+  <tr class="<%= cycle('oddrow', 'evenrow') %>">
+    <td class="name"><%= user.name %></td>
+	<td class="centered"><%= user.credits %></td>
+    <td class="centered"><%= user.clicks_given %></td>
+    <td class="centered"><%= user.clicks_received %></td>
+    <td class="centered-crud"><%= link_to image_tag('show.svg', :class => 'action'), user %></td>
+    <% if admin_signed_in? %>
+      <td class="centered-crud"><%= link_to image_tag('edit.svg', :class => 'action'), edit_user_path(user) %></td>
+ 	  <td class="centered-crud"><%= link_to image_tag('remove.svg', :class => 'action'), user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
+ 	<% end %>
+  </tr>
+<% end %>
+</table>

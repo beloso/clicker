@@ -10,23 +10,25 @@
 <body>
 
 	<div id="main">
-	<div id="nav_bar_div">
-		<ul id="nav_bar">
-		<% unless @selected_user.nil? %>
-		<li> Clicking as <%= @selected_user.name %> |</li>
-		<% end %>
-		<% if admin_signed_in? %>
-		<li>Hi <%= current_adm %>! |</li>
-		<li><%= link_to 'Sign Out', destroy_admin_session_path %> |</li>
-		<li><%= link_to 'Settings', edit_admin_path(current_admin) %> |</li>
-		<li><%= link_to 'Admin List', admins_path %> |</li>
-		<% else %>
-		<li><%= link_to 'Sign In', new_admin_session_path %> |</li>
-		<% end %>
-		<li><%= link_to 'Clicker List', users_path %></li>
-		</ul>
-	</div>
+		<div id="nav_bar_div">
+			<ul id="nav_bar">
+			<% unless @selected_user.nil? %>
+			<li> Clicking as <%= @selected_user.name %> |</li>
+			<% end %>
+			<% if admin_signed_in? %>
+			<li>Hi <%= current_adm %>! |</li>
+			<li><%= link_to 'Sign Out', destroy_admin_session_path %> |</li>
+			<li><%= link_to 'Settings', edit_admin_path(current_admin) %> |</li>
+			<li><%= link_to 'Admin List', admins_path %> |</li>
+			<% else %>
+			<li><%= link_to 'Sign In', new_admin_session_path %> |</li>
+			<% end %>
+			<li><%= link_to 'Clicker List', users_path %></li>
+			</ul>
+		</div>
+		
 		<%= yield %>
+		
 		<br />
 		<%= render :partial => 'shared/footer' %>
 	</div>

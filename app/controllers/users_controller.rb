@@ -155,16 +155,27 @@ class UsersController < ApplicationController
     session[:click_order] ||= load_click_order
     session[:current_user] ||= load_current_user
     @clicked_user ||= load_clicked_user
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> forms
     @next_user = next_in_array @user.id, session[:click_order]
 
     if !session[:current_user].blank? && @selected_user.nil?
       @selected_user ||= User.find(session[:current_user])
     else
       flash[:error] = 'You must select a user.'
+<<<<<<< HEAD
       redirect_to :action => 'index' and return
     end
 
+=======
+      redirect_to :action => 'index'
+      return
+    end
+    
+>>>>>>> forms
     process_click
     
     if params[:commit] == 'End Clicking'
@@ -218,10 +229,17 @@ class UsersController < ApplicationController
       session[:current_user] = params["selected_user" + @user.id.to_s].to_i
     end
   end
+<<<<<<< HEAD
 
   def load_clicked_user
     if !params[:clicked_user].blank?
       User.find(params[:clicked_user])
+=======
+  
+  def load_clicked_user
+    if !params[:clicked_user].blank?
+        User.find(params[:clicked_user])
+>>>>>>> forms
     end
   end
 

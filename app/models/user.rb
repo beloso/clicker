@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   def find_name
     doc = Nokogiri::HTML(open(self.url))
 
-    doc.text.scan(REG).flatten.compact.first    
+    doc.css(wrap_content).text.scan(REG).flatten.compact.first    
   end
   
   ### Class Methods

@@ -37,7 +37,6 @@
 <% @clickables.each do |user| %>
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
     <td class="name"><%= user.name %></td>
-	<% if true %>
     <td class="centered-click">
 	<%= form_tag(click_user_path(user) ,:method => :post, :onSubmit => "hidden=document.getElementById('selected_user"+user.id.to_s+"');
 																			drop=document.getElementById('user_id');
@@ -45,7 +44,6 @@
  		<%= hidden_field_tag 'selected_user'+user.id.to_s %>
 		<%= image_submit_tag 'click.svg', :class => 'action' %>
 		<% end %></td>
-	<% end %>
 	<td class="centered"><%= user.credits %></td>
     <td class="centered"><%= user.clicks_given %></td>
     <td class="centered"><%= user.clicks_received %></td>

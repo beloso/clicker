@@ -143,6 +143,7 @@ class UsersController < ApplicationController
     
     session[:click_order] ||= load_click_order
     session[:current_user] ||= load_current_user
+    @clicked_user ||= load_clicked_user
         
     @next_user = next_in_array @user.id, session[:click_order]
     
@@ -152,16 +153,6 @@ class UsersController < ApplicationController
       flash[:error] = 'You must select a user.'
       redirect_to :action => 'index'
       return
-    end
-    
-    if !params[:clicked_user].blank?
-        @clicked_user ||= User.find(params[:clicked_user])
-    end
-    
-    if @clicked_user != @selected_user
-      process_click
-    else
-      flash[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
     end
     
     if params[:commit] == 'End Clicking'
@@ -216,22 +207,32 @@ class UsersController < ApplicationController
     end
   end
   
+  def load_clicked_user
+    if !params[:clicked_user].blank?
+        User.find(params[:clicked_user])
+    end
+  end
+
   def process_click
-    case params[:commit]
-    when 'Next User'
-      User.transaction do
-        @clicked_user.lose_credit
-        @selected_user.gain_credit
+    if @clicked_user != @selected_user
+      case params[:commit]
+      when 'Next User'
+        User.transaction do
+          @clicked_user.lose_credit
+          @selected_user.gain_credit
+        end
+        flash.now[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
+      when 'End Clicking'
+        User.transaction do
+          @clicked_user.lose_credit
+          @selected_user.gain_credit
+        end
+        flash[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
+      when 'Skip User'
+        flash.now[:error] = 'Skipped ' + @clicked_user.name + '.'
       end
-      flash.now[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
-    when 'End Clicking'
-      User.transaction do
-        @clicked_user.lose_credit
-        @selected_user.gain_credit
-      end
+    else
       flash[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
-    when 'Skip User'
-      flash.now[:error] = 'Skipped ' + @clicked_user.name + '.'
     end
   end
 end

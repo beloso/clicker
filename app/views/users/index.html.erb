@@ -1,5 +1,7 @@
 <h1><%= @title = "Clicker" %></h1>
 
+<br />
+
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <br />
@@ -29,7 +31,6 @@
 <% @clickables.each do |user| %>
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
     <td class="name"><%= user.name %></td>
-	<% if true %>
     <td class="centered-click">
 	<%= form_tag(click_user_path(user) ,:method => :post, :onSubmit => "hidden=document.getElementById('selected_user"+user.id.to_s+"');
 																			drop=document.getElementById('user_id');
@@ -37,7 +38,6 @@
  		<%= hidden_field_tag 'selected_user'+user.id.to_s %>
 		<%= image_submit_tag 'click.svg', :class => 'action' %>
 		<% end %></td>
-	<% end %>
 	<td class="centered"><%= user.credits %></td>
     <td class="centered"><%= user.clicks_given %></td>
     <td class="centered"><%= user.clicks_received %></td>
@@ -122,7 +122,3 @@
 <%= link_to image_tag('refresh.svg', :class => 'action') +  ' Reset Clicks', reset_counters_users_path, :confirm => 'Are you sure you want to refresh all click data?', :method => :put %>
 <% end %>
 </div>
-
-<br />
-
-<%= render :partial => 'shared/footer' %>

@@ -1,8 +1,8 @@
 require 'open-uri'
 
 class User < ActiveRecord::Base
-  MINIMUM_CREDITS = -5
-  
+  MINIMUM_CREDITS = Configurable.minimum_credits
+    
   REG = /([a-zA-Z0-9_]*) has recruited too many people today.|You are being recruited into the army of ([a-zA-Z0-9_]*)/
   
   before_validation :default_values
@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
     self.legend            = false     unless self.legend
     if isClickable? && hasLink?
       self.name            = find_name if     self.name.blank?
-      self.clicks_given    = 25        unless self.clicks_given
+      self.clicks_given    = Configurable.starting_clicks       unless self.clicks_given
       self.clicks_received = 0         unless self.clicks_received
     else
       self.clicks_given    = 0         unless self.clicks_given

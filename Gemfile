@@ -4,6 +4,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.7'
 gem 'devise'
 gem 'simple_form'
+gem 'configurable_engine'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

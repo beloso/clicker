@@ -1,0 +1,32 @@
+<% content_for :header do %>
+	<h1><%= @title = Configurable.site_title + ' Configurations' %></h1>
+<% end %>
+
+<div class="clicker_form">
+<%= form_tag(admin_configurable_path, :method => :put, :class => "simple_form user") do %>
+	
+	<div class="input string optional">
+	<%= label_tag "site_title", Configurable.defaults["site_title"][:name], :class => "string optional" %>
+    <%= text_field_tag "site_title", Configurable.send("site_title"), :class => "string optional" %>
+	</div>
+	<br />
+	<div class="input numeric integer optional">
+	<%= label_tag "starting_clicks", Configurable.defaults["starting_clicks"][:name], :class => "string optional" %>
+    <%= text_field_tag "starting_clicks", Configurable.send("starting_clicks"), :class => "string optional" %>
+	</div>
+	<br />
+	<div class="input numeric integer optional">
+	<%= label_tag "minimum_credits", Configurable.defaults["minimum_credits"][:name], :class => "string optional" %>
+    <%= text_field_tag "minimum_credits", Configurable.send("minimum_credits"), :class => "string optional" %>
+  	</div>
+	<br />
+	<%= submit_tag 'Update Configurations', :class =>"button"%>
+<% end %>
+</div>
+
+<br />
+
+<div class="bottom_nav">
+<%= link_to image_tag('back.svg', :class => 'action') + ' To Admin List', admins_path %> |
+<%= link_to image_tag('back.svg', :class => 'action') + ' To Clicker List', users_path %>
+</div>

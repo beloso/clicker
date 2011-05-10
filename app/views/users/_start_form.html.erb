@@ -1,0 +1,6 @@
+<div id="start_form">
+<%= form_tag(click_user_path(@users.first), :method => :post) do %>
+<%= select("user", "id", @sorted_by_name.collect { |p| [ p.name, p.id ] }, {:prompt => 'Select User'}, :disabled => @users.empty?) %>
+<%= submit_tag 'Start Clicking', :disabled => @users.empty? %>
+<% end %>
+</div>

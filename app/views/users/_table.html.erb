@@ -1,0 +1,57 @@
+<% unless users.empty? %>
+<div class="top"><%= title %></div>
+<table class="user_list">
+  <tr class="top">
+<% if sortable %>
+	<th><%= sortable "name" %></th>
+	<th><%= sortable 'clicks_given - clicks_received', 'Credits' %></th>
+	<th><%= sortable 'clicks_given' %></th>
+	<th><%= sortable 'clicks_received' %></th>
+<% else %>
+    <th>Name</th>
+	<% if click_button %>
+    <th></th>
+	<% end %>
+	<% if creditable %>
+	<th>Credits</th>
+	<% end %>
+    <th>Clicks Given</th>
+	<% if !legend %>
+    <th>Clicks Received</th>
+    <% end %>
+<% end %>
+	<th></th>
+		<% if admin_signed_in? %>
+		<th></th>
+		<th></th>
+		<% end %>
+  </tr>
+<% end %>
+
+<% users.each do |user| %>
+  <tr class="<%= cycle('oddrow', 'evenrow') %>">
+    <td class="name"><%= user.name %></td>
+	<% if click_button %>
+    <td class="centered-click">
+	<%= form_tag(click_user_path(user) ,:method => :post, :onSubmit => "hidden=document.getElementById('selected_user"+user.id.to_s+"');
+																			drop=document.getElementById('user_id');
+																			document.getElementById('selected_user"+user.id.to_s+"').value=drop[drop.selectedIndex].value;") do %>
+ 		<%= hidden_field_tag 'selected_user'+user.id.to_s %>
+		<%= image_submit_tag 'click.svg', :class => 'action' %>
+		<% end %></td>
+	<% end %>
+	<% if creditable %>
+	<td class="centered"><%= user.credits %></td>
+	<% end %>
+    <td class="centered"><%= user.clicks_given %></td>
+	<% if !legend %>
+    <td class="centered"><%= user.clicks_received %></td>
+	<% end %>
+    <td class="centered-crud"><%= link_to image_tag('show.svg', :class => 'action'), user %></td>
+    <% if admin_signed_in? %>
+      <td class="centered-crud"><%= link_to image_tag('edit.svg', :class => 'action'), edit_user_path(user) %></td>
+ 	  <td class="centered-crud"><%= link_to image_tag('remove.svg', :class => 'action'), user, :confirm => 'Are you sure you want to delete ' + user.name + '?', :method => :delete %></td>
+ 	<% end %>
+  </tr>
+<% end %>
+</table>

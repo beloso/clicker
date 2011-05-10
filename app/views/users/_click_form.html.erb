@@ -1,0 +1,9 @@
+<div class="top_forms">
+<%= form_tag(click_user_path(@next_user), :method => :post) do %>
+  <%= hidden_field_tag 'clicked_user', @user.id %>
+  <%= text_field_tag 'validation_line', nil ,:size => 75 %>
+  <%= submit_tag 'Next User', :disabled => !@next_user %>
+  <%= submit_tag 'Skip User', :disabled => !@next_user %>
+  <%= submit_tag 'End Clicking' %>
+<% end %>
+</div>

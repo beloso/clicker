@@ -1,10 +1,6 @@
-<h1><%= @title = 'Sign Up' %></h1>
-
-<br />
-
-<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
-
-<br />
+<% content_for :header do %>
+	<h1><%= @title = 'Sign Up' %></h1>
+<% end %>
 
 <div class="devise_forms">
 <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>

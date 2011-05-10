@@ -1,10 +1,6 @@
-<h1> <%= @title = 'Admin List' %> </h1>
-
-<br />
-
-<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
-
-<br />
+<% content_for :header do %>
+	<h1> <%= @title = 'Admin List' %> </h1>
+<% end %>
 
 <table class="user_list">
   <tr class="top">

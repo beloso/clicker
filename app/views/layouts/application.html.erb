@@ -5,7 +5,7 @@
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
-
+  <%= favicon_link_tag %>
 </head>
 <body>
 
@@ -28,10 +28,7 @@
 		</div>
 		
 		<%= yield %>
-<<<<<<< HEAD
-		
-=======
->>>>>>> forms
+
 		<br />
 		<%= render :partial => 'shared/footer' %>
 	</div>

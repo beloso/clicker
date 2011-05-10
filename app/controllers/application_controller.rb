@@ -9,5 +9,4 @@ class ApplicationController < ActionController::Base
     include Singleton
     include ActionView::Helpers::TextHelper
   end
-    
 end

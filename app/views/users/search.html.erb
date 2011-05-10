@@ -15,10 +15,10 @@
 <div class="top">Clickers</div>
 <table class="user_list">
   <tr class="top">
-    <th>Name</th>
-	<th>Credits</th>
-    <th>Clicks Given</th>
-    <th>Clicks Received</th>
+    <th><%= sortable "name" %></th>
+	<th><%= sortable 'clicks_given - clicks_received', 'Credits' %></th>
+    <th><%= sortable 'clicks_given' %></th>
+    <th><%= sortable 'clicks_received' %></th>
     <th></th>
 		<% if admin_signed_in? %>
 		<th></th>

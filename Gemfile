@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 # Use stable rails
-gem 'rails', '3.0.6'
+gem 'rails', '3.0.7'
 gem 'devise'
 gem 'simple_form'
 
@@ -32,9 +32,9 @@ gem 'nokogiri'
 # and rake tasks are available in development mode:
 group :development, :test do
   # gem 'webrat'
-  gem 'ruby-debug'
+#  gem 'ruby-debug'
   gem 'hirb'
-#  gem 'ruby-debug19', :require => 'ruby-debug'
+  	gem 'ruby-debug19', :require => 'ruby-debug'
 #  gem 'linecache19'
   # gem 'RedCloth', '>= 4.1.1'
   #	gem 'rails-footnotes', '>= 3.7'

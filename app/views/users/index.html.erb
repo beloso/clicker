@@ -7,12 +7,14 @@
 <br />
 <div class="top_forms">
 	<div id="start_form">
-	<% form_tag(click_user_path(@users.first), :method => :post) do %>
+	<%= form_tag(click_user_path(@users.first), :method => :post) do %>
  	<%= select("user", "id", @sorted_by_name.collect { |p| [ p.name, p.id ] }, {:prompt => 'Select User'}, :disabled => @users.empty?) %>
 	<%= submit_tag 'Start Clicking', :disabled => @users.empty? %>
 	<% end %>
 	</div>
+	<% if admin_signed_in? %>
 	<%= render :partial => 'search' %>
+	<% end %>
 	<div class="clear"></div>
 </div>
 <br />
@@ -124,7 +126,7 @@
 <%= link_to image_tag('new.svg', :class => 'action') + ' New Clicker', new_user_path %>
 <% if admin_signed_in? %>
 | <%= link_to image_tag('new-mult.svg', :class => 'action') + ' Add Multiple Clickers', new_batch_users_path %>
-| <%= link_to image_tag('clean.svg', :class => 'action') + ' Delete Inactive', destroy_frozen_users_path, :confirm => 'Are you sure you want to delete all frozen users?', :method => :delete %> |
+| <%= link_to image_tag('clean.svg', :class => 'action') + ' Delete Inactive', destroy_frozen_users_path, :confirm => 'Are you sure you want to delete all inactive users?', :method => :delete %> |
 <%= link_to image_tag('refresh.svg', :class => 'action') +  ' Reset Clicks', reset_counters_users_path, :confirm => 'Are you sure you want to refresh all click data?', :method => :put %>
 <% end %>
 </div>

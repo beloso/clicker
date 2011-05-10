@@ -69,6 +69,11 @@ div.field, div.actions {
 	color: lightgreen;
 }
 
+#main table tr.top th a, table tr.top th a:hover {
+	color: lightgreen;
+	background-color: transparent;
+}
+
 #main table tr.evenrow {
 	background-color: lightgreen; 
 }
@@ -271,7 +276,8 @@ div.footer{
 .simple_form input[type='password'],
 .simple_form input[type='text'],
 .simple_form input[type='url'],
-.simple_form input[type='email'] {
+.simple_form input[type='email'],
+.simple_form input[type='number'] {
  	width: 200px;
 }
 

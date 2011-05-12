@@ -1,7 +1,7 @@
 require 'open-uri'
 
 class User < ActiveRecord::Base
-  MINIMUM_CREDITS = Configurable.minimum_credits
+  MINIMUM_CREDITS ||= Configurable.minimum_credits
     
   REG = /([a-zA-Z0-9_]*) has recruited too many people today.|You are being recruited into the army of ([a-zA-Z0-9_]*)/
   

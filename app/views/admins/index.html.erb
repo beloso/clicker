@@ -2,10 +2,13 @@
 	<h1> <%= @title = 'Admin List' %> </h1>
 <% end %>
 
+<div class="top">Admins</div>
 <table class="user_list">
   <tr class="top">
     <th>Name</th>
-    <th>Last Log In</th>
+	<th>Created At</th>
+    <th>Last Sign In</th>
+	<th>Last Sign In IP</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,7 +17,9 @@
 <% @admins.each do |admin| %>
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
     <td class="name"><%= admin.name %></td>
-    <td class="centered"><%= admin.last_sign_in_at %></td>
+    <td class="centered"><%= admin.created_at.localtime.ctime %></td>
+    <td class="centered"><%= admin.last_sign_in_at.localtime.ctime %></td>
+    <td class="centered"><%= admin.last_sign_in_ip %></td>
     <td class="centered-crud"><%= link_to image_tag('show.svg', :class => 'action'), admin %></td>
     <% if admin_signed_in? %>
       <td class="centered-crud"><%= link_to image_tag('edit.svg', :class => 'action'), edit_admin_path(admin) %></td>

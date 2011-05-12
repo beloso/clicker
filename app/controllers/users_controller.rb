@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  MINIMUM_CREDITS = Configurable.minimum_credits
+  MINIMUM_CREDITS ||= Configurable.minimum_credits
 
   before_filter :authenticate_admin!, :except => [:index, :show, :new, :click, :create]
   

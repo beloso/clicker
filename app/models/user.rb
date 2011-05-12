@@ -16,8 +16,7 @@ class User < ActiveRecord::Base
     else
       self.clicks_given    = 0         unless self.clicks_given
       self.clicks_received = 0         unless self.clicks_received
-    end 
-  end
+    end
   
   def isClickable?
     !self.legend 

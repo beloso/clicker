@@ -10,11 +10,15 @@
 	<div class="clear"></div>
 </div></p>
 
+<%= form_tag(destroy_selected_users_path, :method => :delete) do %>
 <p><%= render :partial => 'table', :locals => { :users => @clickables, :title => 'Clickers',:sortable => false, :click_button => true, :creditable => true, :legend => false } %></p>
 
 <p><%= render :partial => 'table', :locals => { :users => @legends, :title => 'Legends', :sortable => false, :click_button => false, :creditable => false, :legend => true } %></p>
 
 <p><%= render :partial => 'table', :locals => { :users => @frozen, :title => 'Inactive Clickers', :sortable => false, :click_button => false, :creditable => true, :legend => false } %></p>
+
+<%= submit_tag "Delete Selected"%>
+<% end -%>
 
 <div class="bottom_nav">
 <%= link_to image_tag('new.svg', :class => 'action') + ' New Clicker', new_user_path %>

@@ -33,10 +33,9 @@ gem 'nokogiri'
 # and rake tasks are available in development mode:
 group :development, :test do
   # gem 'webrat'
-#  gem 'ruby-debug'
+  # gem 'ruby-debug'
   gem 'hirb'
-  	gem 'ruby-debug19', :require => 'ruby-debug'
-#  gem 'linecache19'
+  gem 'ruby-debug19', :require => 'ruby-debug'
   # gem 'RedCloth', '>= 4.1.1'
   #	gem 'rails-footnotes', '>= 3.7'
 end

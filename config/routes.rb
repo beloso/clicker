@@ -7,6 +7,7 @@ Clicker::Application.routes.draw do
       get 'new_batch'
       put 'reset_counters'
       delete 'destroy_frozen'
+      delete 'destroy_selected'
     end
     member do
       get 'click'

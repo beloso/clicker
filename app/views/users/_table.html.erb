@@ -2,6 +2,7 @@
 <div class="top"><%= title %></div>
 <table class="user_list">
   <tr class="top">
+  <th></th>
 <% if sortable %>
 	<th><%= sortable "name" %></th>
 	<th><%= sortable 'clicks_given - clicks_received', 'Credits' %></th>
@@ -30,6 +31,7 @@
 
 <% users.each do |user| %>
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
+ 	<td class="check"><%= check_box_tag "user_ids[]",user.id %></td>
     <td class="name"><%= user.name %></td>
 	<% if click_button %>
     <td class="centered-click">

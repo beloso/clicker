@@ -7,7 +7,7 @@ class AdminsController < ApplicationController
   # GET /admins
   # GET /admins.xml
   def index
-    @admins = Admin.all       
+    @admins = Admin.select('*').order(sort_column + " " + sort_direction)
     
     respond_to do |format|
       format.html # index.html.erb
@@ -116,10 +116,13 @@ class AdminsController < ApplicationController
   # DELETE /users/
   # DELETE /users/
   def destroy_selected
-    deleted = Admin.delete_all(:id => params[:admin_ids])
+    params[:admin_ids].delete('1')
+    if params[:admin_ids]
+      deleted = Admin.delete_all(:id => params[:admin_ids])
+    end
     
     respond_to do |format|
-      format.html { redirect_to admins_path, :notice => "#{helpers.pluralize(deleted, 'user was', 'users were')} successfully deleted." }
+      format.html { redirect_to :back, :notice => "#{helpers.pluralize(deleted, 'user was', 'users were')} successfully deleted." }
       format.xml  { head :ok }
     end
   end

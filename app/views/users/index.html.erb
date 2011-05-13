@@ -7,7 +7,7 @@
 <%= render :partial => 'search' %>
 <% end %>
 
-<%= form_tag !@users.empty? ? click_user_path(@users.first) : {}, :method => :post, :class => 'main-form' do %>
+<%= form_tag !@users.empty? ? click_user_path(@users.first) : {}, :method => :post, :class => 'main-form', :id => 'main_form' do %>
 <%= select('user', 'id', @sorted_by_name.collect { |p| [ p.name, p.id ] }, {:prompt => 'Select User'}, :disabled => @users.empty?) %>
 <%= submit_tag 'Start Clicking', :disabled => @users.empty? %>
 <%= submit_tag 'Delete Selected', :disabled => @users.empty? %>

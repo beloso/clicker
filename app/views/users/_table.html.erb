@@ -24,7 +24,8 @@
 		<% if admin_signed_in? %>
 		<th></th>
 		<th></th>
-		<th></th>		
+		<th><%= check_box_tag('user_ids[]', 'user_ids[]', false, :onClick => "$$('#main_form input.check').each(function(box){box.checked=!box.checked})")
+	  %></th>		
 		<% end %>
   </tr>
 <% end %>

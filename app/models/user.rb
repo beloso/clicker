@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
   end
   
   def self.reset_counters
-    update_all "clicks_given = ?, clicks_received = 0" , "legend = 'f'",STARTING_CREDITS
+    update_all "clicks_given = ?, clicks_received = 0" , "legend = 'f'", STARTING_CREDITS
     update_all "clicks_given = 0, clicks_received = 0" , "legend = 't'"
   end
   
@@ -82,11 +82,10 @@ class User < ActiveRecord::Base
   ### Validations
   
   validates                 :name, :presence => true, :if => :hasLink?
-  validates_uniqueness_of   :name, :if => :hasLink?
+  validates_uniqueness_of   :name
   
-  validates                 :url,  :presence => true, :if => :isClickable?
+  validates                 :url,  :presence => true, :uniqueness => true, :if => :isClickable?
   validates_format_of       :url,  :with     => /\A(http\:\/\/)?(gold|www)?(\.)?darkthrone\.com\/recruiter\/outside\/[A-Z0-9]+\Z/, :if => :isClickable?
-  validates_uniqueness_of   :url,  :if       => :isClickable?
   
   validates_numericality_of :clicks_given,    :only_integer => true, :greater_than_or_equal_to => 0
   validates_numericality_of :clicks_received, :only_integer => true, :greater_than_or_equal_to => 0

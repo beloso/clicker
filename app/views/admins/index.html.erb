@@ -22,14 +22,14 @@
 <% @admins.each do |admin| %>
   <tr class="<%= cycle('oddrow', 'evenrow') %>">
     <td class="name"><%= admin.name %></td>
-    <td class="centered"><%= admin.created_at.localtime.ctime %></td>
-    <td class="centered"><%= admin.last_sign_in_at.localtime.ctime %></td>
-    <td class="centered"><%= admin.last_sign_in_ip %></td>
+    <td class="centered"><%= admin.created_at.localtime.ctime if admin.created_at %></td>
+    <td class="centered"><%= admin.last_sign_in_at.localtime.ctime if admin.last_sign_in_at %></td>
+    <td class="centered"><%= admin.last_sign_in_ip if admin.created_at %></td>
     <td class="centered-crud"><%= link_to image_tag('show.png', :class => 'action'), admin, :title => 'View admin details.' %></td>
     <% if admin_signed_in? %>
       <td class="centered-crud"><%= link_to image_tag('edit.png', :class => 'action'), edit_admin_path(admin), :title => 'Edit admin.' %></td>
  	  <td class="centered-crud"><%= link_to image_tag('remove.png', :class => 'action'), admin, :confirm => 'Are you sure you want to delete '+admin.name+'?', :method => :delete, :title => 'Delete admin.' %></td>
-    <td class="checked"><%= check_box_tag 'admin_ids[]' %></td>
+    <td class="checked"><%= check_box_tag 'admin_ids[]', admin.id %></td>
  	<% end %>
   </tr>
 <% end %>

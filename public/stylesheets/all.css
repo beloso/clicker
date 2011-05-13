@@ -9,7 +9,7 @@ html {
 body { 
 	background-color: darkolivegreen;
 	color: darkgreen;
-	height: 99%;
+	height: 98.5%;
 }
 
 body, p, ol, ul, td {
@@ -149,7 +149,8 @@ div.field, div.actions {
 }
 
 #content-pane table td.centered-crud,
-#content-pane table td.centered-click {
+#content-pane table td.centered-click,
+#content-pane table td.check {
 	text-align: center;
 	width: 25px;
 }
@@ -252,6 +253,20 @@ div.click_frame_div iframe {
 	height:100%;
 	border:0px;
 }
+
+#content-pane th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+/*#content-pane  .asc {
+  background-image: url(/images/up.svg);
+}
+
+#content-pane  .desc {
+  background-image: url(/images/down.svg);
+}*/
 
 .field_with_errors {
 	padding: 2px;

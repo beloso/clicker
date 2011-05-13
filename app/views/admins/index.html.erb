@@ -20,10 +20,10 @@
     <td class="centered"><%= admin.created_at.localtime.ctime %></td>
     <td class="centered"><%= admin.last_sign_in_at.localtime.ctime %></td>
     <td class="centered"><%= admin.last_sign_in_ip %></td>
-    <td class="centered-crud"><%= link_to image_tag('show.svg', :class => 'action'), admin %></td>
+    <td class="centered-crud"><%= link_to image_tag('show.png', :class => 'action'), admin, :title => 'View admin details.' %></td>
     <% if admin_signed_in? %>
-      <td class="centered-crud"><%= link_to image_tag('edit.svg', :class => 'action'), edit_admin_path(admin) %></td>
- 	  <td class="centered-crud"><%= link_to image_tag('remove.svg', :class => 'action'), admin, :confirm => 'Are you sure you want to delete '+admin.name+'?', :method => :delete %></td>
+      <td class="centered-crud"><%= link_to image_tag('edit.png', :class => 'action'), edit_admin_path(admin), :title => 'Edit admin.' %></td>
+ 	  <td class="centered-crud"><%= link_to image_tag('remove.png', :class => 'action'), admin, :confirm => 'Are you sure you want to delete '+admin.name+'?', :method => :delete, :title => 'Delete admin.' %></td>
  	<% end %>
   </tr>
 <% end %>
@@ -32,5 +32,5 @@
 <br />
 
 <div class="bottom_nav">
-<%= link_to image_tag('new.svg', :class => 'action') + ' New Admin', new_admin_path %>
+<%= link_to image_tag('new.png', :class => 'action') + ' New Admin', new_admin_path, :title => 'Create a new admin.' %>
 </div>

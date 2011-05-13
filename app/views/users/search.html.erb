@@ -2,12 +2,11 @@
 	<h1><%= @title = "Clicker" %></h1>
 <% end %>
 
-<p><div class="top_forms">
-	<%= render :partial => 'search' %>
-	<div class="clear"></div>
-</div>
-</p>
+<%= render :partial => 'search' %>
 
+<%= form_tag(destroy_selected_users_path, :method=> :delete) do %>
+<%= submit_tag 'Delete Selected' %>
 <p><%= render :partial => 'table', :locals => { :users => @users, :title => 'Clickers', :sortable => true, :click_button => false, :creditable => true, :legend => false } %></p>
+<% end -%>
 
 </table>

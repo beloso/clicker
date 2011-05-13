@@ -17,8 +17,7 @@
 <br />
 
 <div class="bottom_nav">
-<%= link_to image_tag('edit.svg', :class => 'action') + ' Edit Admin', edit_admin_path(@admin) %> |
-<%= link_to image_tag('remove.svg', :class => 'action') + ' Delete Admin', @admin, :confirm => 'Are you sure you want to delete ' + @admin.name + '?', :method => :delete %> |
-<%= link_to image_tag('back.svg', :class => 'action') + ' To Admin List', admins_path %> |
-<%= link_to image_tag('back.svg', :class => 'action') + ' To Clicker List', users_path %>
+<%= link_to image_tag('edit.png', :class => 'action') + ' Edit Admin', edit_admin_path(@admin), :title => 'Edit admin.' %> |
+<%= link_to image_tag('remove.png', :class => 'action') + ' Delete Admin', @admin, :confirm => 'Are you sure you want to delete ' + @admin.name + '?', :method => :delete, :title => 'Remove admin.' %> |
+<%= link_to image_tag('back.png', :class => 'action') + ' To Admin List', admins_path, :title => 'To admin list.' %>
 </div>

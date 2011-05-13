@@ -153,12 +153,10 @@ class UsersController < ApplicationController
   # DELETE /users/
   def destroy_selected
     # User.destroy_all(params[:users_id])
-    # debugger  
-    User.destroy_all(:id => params[:user_ids])
+    deleted = User.delete_all(:id => params[:user_ids])
     
     respond_to do |format|
-      format.html { redirect_to :back #, :notice => "#{helpers.pluralize(deleted, 'inactive user was', 'inactive users were')} successfully deleted."##
-       }
+      format.html { redirect_to :back, :notice => "#{helpers.pluralize(deleted, 'user was', 'users were')} successfully deleted." }
       format.xml  { head :ok }
     end
   end
@@ -166,8 +164,21 @@ class UsersController < ApplicationController
   # GET /users/1/click
   # GET /users/1/click.xml
   def click
-    @user = User.find(params[:id])
+    if params[:commit] == 'Delete Selected'
+      deleted = User.delete_all(:id => params[:user_ids])
 
+      respond_to do |format|
+        format.html { redirect_to :back, :notice => "#{helpers.pluralize(deleted, 'user was', 'users were')} successfully deleted." }
+        format.xml  { head :ok }
+      end and return
+    end
+    
+    if params[:start_user]
+      @user = User.find(params[:start_user])
+    else
+      @user = User.find(params[:id])
+    end
+    
     session[:click_order] ||= load_click_order
     session[:current_user] ||= load_current_user
     @clicked_user ||= load_clicked_user

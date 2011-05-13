@@ -2,6 +2,7 @@ require 'open-uri'
 
 class User < ActiveRecord::Base
   MINIMUM_CREDITS ||= Configurable.minimum_credits
+  STARTING_CREDITS ||= Configurable.starting_clicks
     
   REG = /([a-zA-Z0-9_]*) has recruited too many people today.|You are being recruited into the army of ([a-zA-Z0-9_]*)/
   
@@ -11,7 +12,7 @@ class User < ActiveRecord::Base
     self.legend            = false     unless self.legend
     if isClickable? && hasLink?
       self.name            = find_name if     self.name.blank?
-      self.clicks_given    = Configurable.starting_clicks       unless self.clicks_given
+      self.clicks_given    = STARTING_CREDITS unless self.clicks_given
       self.clicks_received = 0         unless self.clicks_received
     else
       self.clicks_given    = 0         unless self.clicks_given
@@ -56,7 +57,7 @@ class User < ActiveRecord::Base
   end
   
   def self.delete_frozen
-    delete_all(["clicks_given - clicks_received < ?", -5])
+    delete_all(["clicks_given - clicks_received < ?", MINIMUM_CREDITS])
   end
   
   def self.ordered_by_credits
@@ -64,7 +65,7 @@ class User < ActiveRecord::Base
   end
   
   def self.reset_counters
-    update_all "clicks_given = 25, clicks_received = 0" , "legend = 'f'"
+    update_all "clicks_given = ?, clicks_received = 0" , "legend = 'f'",STARTING_CREDITS
     update_all "clicks_given = 0, clicks_received = 0" , "legend = 't'"
   end
   

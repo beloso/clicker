@@ -1,0 +1,6 @@
+<div id="search_form">
+<%= form_tag search_admins_path, :method => :get do %>
+<%= text_field_tag :search , params[:search] %>
+<%= submit_tag 'Search Clicker' , :name => nil %>
+<% end %>
+</div>

@@ -15,7 +15,12 @@ Clicker::Application.routes.draw do
     end
   end
   
-  resources :admins
+  resources :admins do
+    collection do
+      get 'search'
+      delete 'destroy_selected'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

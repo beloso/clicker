@@ -4,7 +4,7 @@
 
 <%= render :partial => 'search' %>
 
-<%= form_tag destroy_selected_admins_path, :method => :delete, :class => 'main-form' do %>
+<%= form_tag destroy_selected_admins_path, :method => :post, :class => 'main-form' do %>
 <%= submit_tag 'Delete Selected' %>
 <p><div class="top">Admins</div>
 <table class="user_list">

@@ -2,6 +2,8 @@ class AdminsController < ApplicationController
     
   before_filter :authenticate_admin!
   
+  helper_method :sort_column, :sort_direction
+  
   # GET /admins
   # GET /admins.xml
   def index
@@ -10,6 +12,15 @@ class AdminsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @admins }
+    end
+  end
+  
+  def search
+    @admins ||= Admin.where("name LIKE ?","%#{params[:search]}%").order(sort_column + " " + sort_direction)
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @users }
     end
   end
   
@@ -101,4 +112,26 @@ class AdminsController < ApplicationController
       format.xml  { head :ok }
     end    
   end
+  
+  # DELETE /users/
+  # DELETE /users/
+  def destroy_selected
+    deleted = Admin.delete_all(:id => params[:admin_ids])
+    
+    respond_to do |format|
+      format.html { redirect_to admins_path, :notice => "#{helpers.pluralize(deleted, 'user was', 'users were')} successfully deleted." }
+      format.xml  { head :ok }
+    end
+  end
+  
+  private
+  
+  def sort_column
+    columns ||= Admin.column_names.include?(params[:sort]) ? params[:sort] : 'name'
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  end
+  
 end

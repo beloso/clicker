@@ -7,11 +7,12 @@
 <%= render :partial => 'search' %>
 <% end %>
 
-<%= form_tag !@users.empty? ? click_user_path(@users.first) : {}, :method => :post, :class => 'main-form', :id => 'main_form' do %>
+<%= form_tag !@users.empty? ? click_user_path(@users.first) : {}, :method => :post, :class => 'main-form' do %>
 <%= select('user', 'id', @sorted_by_name.collect { |p| [ p.name, p.id ] }, {:prompt => 'Select User'}, :disabled => @users.empty?) %>
 <%= submit_tag 'Start Clicking', :disabled => @users.empty? %>
-<%= submit_tag 'Delete Selected', :disabled => @users.empty? %>
-
+<% if admin_signed_in? %>
+<%= submit_tag 'Delete Selected', :confirm => 'Are you sure you want to delete all selected users?', :disabled => @users.empty? %>
+<% end %>
 <p><%= render :partial => 'table', :locals => { :users => @clickables, :title => 'Clickers',:sortable => false, :click_button => true, :creditable => true, :legend => false } %></p>
 
 <p><%= render :partial => 'table', :locals => { :users => @legends, :title => 'Legends', :sortable => false, :click_button => false, :creditable => false, :legend => true } %></p>

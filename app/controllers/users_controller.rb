@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   MINIMUM_CREDITS ||= Configurable.minimum_credits
 
+  VALIDATION_REG = /You have just increased ([a-zA-Z0-9]+)'s population to (\d{1,3}(,|.)?\d{1,3})+\./
+
   before_filter :authenticate_admin!, :except => [:index, :show, :new, :click, :create]
   
   helper_method :sort_column, :sort_direction
@@ -165,12 +167,7 @@ class UsersController < ApplicationController
   # GET /users/1/click.xml
   def click
     if params[:commit] == 'Delete Selected'
-      deleted = User.delete_all(:id => params[:user_ids])
-
-      respond_to do |format|
-        format.html { redirect_to :back, :notice => "#{helpers.pluralize(deleted, 'user was', 'users were')} successfully deleted." }
-        format.xml  { head :ok }
-      end and return
+      destroy_selected and return
     end
     
     if params[:start_user]
@@ -259,22 +256,34 @@ class UsersController < ApplicationController
       User.find(params[:clicked_user])
     end
   end
+  
+  def update_credits
+    User.transaction do
+      @clicked_user.lose_credit
+      @selected_user.gain_credit
+    end
+  end
 
   def process_click
     if @clicked_user != @selected_user
+      if params[:validation_line]
+        m = params[:validation_line].match(VALIDATION_REG)
+      end
       case params[:commit]
       when 'Next User'
-        User.transaction do
-          @clicked_user.lose_credit
-          @selected_user.gain_credit
+        if m && m[1] == @clicked_user.name
+          update_credits
+          flash.now[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
+        else
+          flash.now[:error] = 'Invalid click for ' + @clicked_user.name + '.'
         end
-        flash.now[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
       when 'End Clicking'
-        User.transaction do
-          @clicked_user.lose_credit
-          @selected_user.gain_credit
+        if m && m[1] == @clicked_user.name
+          update_credits
+          flash[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
+        else
+          flash[:error] = 'Invalid click for ' + @clicked_user.name + '.'
         end
-        flash[:notice] = 'Successfully clicked ' + @clicked_user.name + '.'
       when 'Skip User'
         flash.now[:error] = 'Skipped ' + @clicked_user.name + '.'
       end
